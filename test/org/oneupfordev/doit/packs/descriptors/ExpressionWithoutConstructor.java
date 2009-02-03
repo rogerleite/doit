@@ -1,7 +1,7 @@
 package org.oneupfordev.doit.packs.descriptors;
 
-import org.oneupfordev.doit.packs.annotations.ExprDescription;
+import org.oneupfordev.doit.packs.annotations.RootCmd;
 
-@ExprDescription()
+@RootCmd()
 public class ExpressionWithoutConstructor extends NakedExampleExpression {
 }

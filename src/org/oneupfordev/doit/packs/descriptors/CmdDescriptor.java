@@ -78,6 +78,7 @@ public class CmdDescriptor {
 	}
 
 	private List<Method> findMethodByName(String methodName, List<Method> methods) {
+		//TODO: find a better way than this
 		List<Method> methodsFound = new ArrayList<Method>();
 		for (Method method : methods) {
 			if (method.getName().equalsIgnoreCase(methodName)) {

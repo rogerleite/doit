@@ -20,12 +20,12 @@ import org.oneupfordev.doit.CallableExpression;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface ExprDescription {
+public @interface RootCmd {
 
 	@Documented
 	@Retention(RetentionPolicy.RUNTIME)
 	@Target(ElementType.TYPE)
-	public @interface InnerCmdDescriptor {
+	public @interface Cmd {
 		String name();
 		String[] innerCmds() default {};
 	}

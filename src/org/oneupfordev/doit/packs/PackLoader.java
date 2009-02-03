@@ -8,7 +8,7 @@ import java.util.List;
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
-import org.oneupfordev.doit.packs.descriptors.ExprCmdDescriptor;
+import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 
 /**
@@ -28,7 +28,7 @@ public abstract class PackLoader {
 
 		ExprPackDescriptor packDescr = new ExprPackDescriptor(exPack.getName());
 		for(Class<? extends CallableExpression> clazz : list) {
-			ExprCmdDescriptor descr = null;
+			RootCmdDescriptor descr = null;
 			try {
 				descr = validateAndLoad(clazz);
 				packDescr.add(descr);
@@ -40,6 +40,6 @@ public abstract class PackLoader {
 		return packDescr;
 	}
 
-	abstract ExprCmdDescriptor validateAndLoad(final Class<? extends CallableExpression> classExpression);
+	abstract RootCmdDescriptor validateAndLoad(final Class<? extends CallableExpression> classExpression);
 
 }

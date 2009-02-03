@@ -17,7 +17,7 @@ import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
 import org.oneupfordev.doit.packs.descriptors.ArgumentType;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
-import org.oneupfordev.doit.packs.descriptors.ExprCmdDescriptor;
+import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutConstructor;
@@ -34,7 +34,7 @@ public class TestPackLoaderByAnnotation {
 	public void validateOfExpressionWithoutCommandsAndEmptyConstructor() {
 
 		PackLoader packLoader = new PackLoaderByAnnotation();
-		ExprCmdDescriptor descr = packLoader.validateAndLoad(ExpressionWithoutConstructor.class);
+		RootCmdDescriptor descr = packLoader.validateAndLoad(ExpressionWithoutConstructor.class);
 		assertNotNull("ExprCmdDescriptor cannot be null.", descr);
 		assertEquals("expressionwithoutconstructor", descr.getName());
 		assertNotNull("ArgumentType of ExprCmdDescriptor cannot be null.", descr.getArgumentType());
@@ -58,7 +58,7 @@ public class TestPackLoaderByAnnotation {
 	@Test
 	public void exprCmdDescriptorIsOk() {
 		PackLoader packLoader = new PackLoaderByAnnotation();
-		ExprCmdDescriptor descr = packLoader.validateAndLoad(ExpressionValid.class);
+		RootCmdDescriptor descr = packLoader.validateAndLoad(ExpressionValid.class);
 		assertNotNull("ExprCmdDescriptor cannot be null.", descr);
 		assertEquals("expressionvalid", descr.getName());
 		assertNotNull("ArgumentType cannot be null.", descr.getArgumentType());

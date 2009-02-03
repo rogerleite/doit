@@ -16,7 +16,7 @@ import org.oneupfordev.doit.packs.PackLoader;
 public class ExprPackDescriptor {
 
 	protected String name;
-	protected List<ExprCmdDescriptor> descriptors = new ArrayList<ExprCmdDescriptor>();
+	protected List<RootCmdDescriptor> descriptors = new ArrayList<RootCmdDescriptor>();
 	protected List<Throwable> errors = new ArrayList<Throwable>();
 
 	public ExprPackDescriptor(String name) {
@@ -26,7 +26,7 @@ public class ExprPackDescriptor {
 		this.name = name;
 	}
 
-	public void add(ExprCmdDescriptor descr) {
+	public void add(RootCmdDescriptor descr) {
 		this.descriptors.add(descr);
 	}
 
@@ -54,9 +54,9 @@ public class ExprPackDescriptor {
 	}
 
 	/**
-	 * @return <b>read only</b> list of {@link ExprCmdDescriptor}s.
+	 * @return <b>read only</b> list of {@link RootCmdDescriptor}s.
 	 */
-	public List<ExprCmdDescriptor> getDescriptors() {
+	public List<RootCmdDescriptor> getDescriptors() {
 		return Collections.unmodifiableList(descriptors);
 	}
 

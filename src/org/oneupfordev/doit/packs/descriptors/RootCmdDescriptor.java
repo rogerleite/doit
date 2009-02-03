@@ -16,11 +16,11 @@ import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
  * Describe commands of Expression.
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
  */
-public class ExprCmdDescriptor extends CmdDescriptor {
+public class RootCmdDescriptor extends CmdDescriptor {
 
 	//private Class<? extends CallableExpression> classExpression;
 
-	public ExprCmdDescriptor(Class<? extends CallableExpression> classExpression) {
+	public RootCmdDescriptor(Class<? extends CallableExpression> classExpression) {
 		//this.classExpression = classExpression;
 		setName(classExpression.getSimpleName());
 	}
