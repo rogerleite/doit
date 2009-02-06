@@ -5,8 +5,14 @@ package org.oneupfordev.doit.parsers;
 
 import static junit.framework.TestCase.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.oneupfordev.doit.CallableExpression;
+import org.oneupfordev.doit.Dictionary;
+import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
+import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 
 
@@ -16,6 +22,17 @@ import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
  */
 public class TestExpressionParser {
 
+	private Dictionary getDictionary() {
+		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
+		validList.add(ExpressionValid.class);
+		ExampleExpressionPack validPack = new ExampleExpressionPack("example", validList);
+
+		Dictionary dic = new Dictionary();
+		ExprPackDescriptor descr = dic.load(validPack);
+		dic.add(descr);
+		return dic;
+	}
+
 	@Test
 	public void parseValidExpression() {
 		/*
@@ -23,7 +40,7 @@ public class TestExpressionParser {
 		 * ExprDescription(cmds={"test"})
 		 * InnerCmdDescriptor(name="test", innerCmds={"testInner", "testInner2"})
 		 */
-		Expressions exp = new Expressions();
+		Expressions exp = new Expressions(getDictionary());
 		CallableExpression ce = exp.parse("expressionvalid");
 		checkCallableExpression(ce, true, false, null, false, false,
 				false, null, false, null);

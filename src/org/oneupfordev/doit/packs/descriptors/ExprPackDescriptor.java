@@ -60,4 +60,58 @@ public class ExprPackDescriptor {
 		return Collections.unmodifiableList(descriptors);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("'" + this.name + "'");
+		if (descriptors != null) {
+			builder.append(" descriptors: [ ");
+			for (RootCmdDescriptor rootCmd : descriptors) {
+				builder.append(rootCmd);
+			}
+			builder.append(" ]");
+		}
+
+		if (errors != null) {
+			builder.append(" errors: [ ");
+			for (Throwable t : errors) {
+				builder.append(t.getMessage());
+			}
+			builder.append(" ]");
+		}
+
+		return builder.toString() + " ";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((descriptors == null) ? 0 : descriptors.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof ExprPackDescriptor))
+			return false;
+		ExprPackDescriptor other = (ExprPackDescriptor) obj;
+		if (descriptors == null) {
+			if (other.descriptors != null)
+				return false;
+		} else if (!descriptors.equals(other.descriptors))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
 }

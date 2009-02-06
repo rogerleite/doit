@@ -107,4 +107,57 @@ public class CmdDescriptor {
 		return resultArgumentType;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder("'" + this.name + "'");
+		builder.append(" ").append(argumentType);
+		if (innerCmds != null) {
+			builder.append(" innerCmds: [ ");
+			for (CmdDescriptor cmd : innerCmds) {
+				builder.append(cmd);
+			}
+			builder.append(" ]");
+		}
+		return builder.toString() + " ";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((argumentType == null) ? 0 : argumentType.hashCode());
+		result = prime * result
+				+ ((innerCmds == null) ? 0 : innerCmds.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof CmdDescriptor))
+			return false;
+		CmdDescriptor other = (CmdDescriptor) obj;
+		if (argumentType == null) {
+			if (other.argumentType != null)
+				return false;
+		} else if (!argumentType.equals(other.argumentType))
+			return false;
+		if (innerCmds == null) {
+			if (other.innerCmds != null)
+				return false;
+		} else if (!innerCmds.equals(other.innerCmds))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+
 }
