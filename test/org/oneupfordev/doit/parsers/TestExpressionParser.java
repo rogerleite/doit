@@ -11,6 +11,7 @@ import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 
 
 /**
+ * Tests of Expression Parser.
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
  */
 public class TestExpressionParser {
