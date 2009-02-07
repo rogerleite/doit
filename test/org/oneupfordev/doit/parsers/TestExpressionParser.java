@@ -34,6 +34,23 @@ public class TestExpressionParser {
 	}
 
 	@Test
+	public void parseArguments() {
+		Expressions expressions = new Expressions(getDictionary());
+		List<Argument> args = new ArrayList<Argument>();
+		String result;
+
+		result = expressions.parseArguments("cmd", args);
+		assertEquals(0, args.size());
+		assertEquals("cmd", result);
+		result = expressions.parseArguments("cmd 'arg1'", args);
+		assertEquals(1, args.size());
+		assertEquals("cmd $p1", result);
+		result = expressions.parseArguments("cmd 'arg1' inner 'arg2'", args);
+		assertEquals(2, args.size());
+		assertEquals("cmd $p1 inner $p2", result);
+	}
+
+	@Test
 	public void parseValidExpression() {
 		/*
 		 * ExpressionValid annotations:
