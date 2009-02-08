@@ -3,6 +3,7 @@
  */
 package org.oneupfordev.doit.parsers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.oneupfordev.doit.CallableExpression;
@@ -28,7 +29,7 @@ public class Expressions {
 
 	protected CallableExpression parse(final String expression, RootCmdDescriptor cmdDescr) {
 
-		List<Argument> arguments = null;
+		List<Argument> arguments = new ArrayList<Argument>();
 		String newExpression = parseArguments(expression, arguments);
 		newExpression = removeInvalidChars(newExpression);
 
@@ -60,28 +61,30 @@ public class Expressions {
 		final String simpleQuote = "'";
 		arguments.clear();
 
-		StringBuilder parsedExpression = new StringBuilder(expression);
+		StringBuilder parsedExpr = new StringBuilder(expression);
 		int indexLeft = -1;
 		int index = -1;
 		while (true) {
-			index = expression.indexOf(simpleQuote, index + 1);
+			index = parsedExpr.indexOf(simpleQuote, index + 1);
 			if (index < 0) break;
 			if (indexLeft == -1) {
 				indexLeft = index;
 			} else {
-				String value = expression.substring(indexLeft + 1, index);
+				String value = parsedExpr.substring(indexLeft + 1, index);
 				arguments.add(new Argument(value));
 
-				parsedExpression.delete(indexLeft, index + 1);
-				parsedExpression.insert(indexLeft, "$p" + arguments.size());
+				parsedExpr.delete(indexLeft, index + 1);
+				parsedExpr.insert(indexLeft, "$p" + arguments.size());
 
 				indexLeft = -1;
+				index = -1;
 			}
 		}
 		if (indexLeft != -1) {
 			throw new RuntimeException("A problem occurred during Arguments parsing.");
 		}
-		return parsedExpression.toString();
+
+		return parsedExpr.toString();
 	}
 
 }
