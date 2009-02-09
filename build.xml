@@ -22,6 +22,7 @@
 
 	<!-- Remove classes directory for clean build -->
 	<target name="clean" description="Prepare for clean build">
+		<tstamp/>
 		<echo>Cleaning folder build ...</echo>
 		<delete dir="build"/>
 	</target>
@@ -58,7 +59,23 @@
 		<copy todir="build/bin">
 			<fileset dir="." includes="README*" />
 		</copy>
-		<jar destfile="build/doit.jar" basedir="build/bin" />
+		<mkdir dir="build/jar"/>
+		<jar destfile="build/jar/doit.jar" basedir="build/bin">
+			<manifest>
+				<!-- Who is building this jar? -->
+				<attribute name="Built-By" value="${user.name}"/>
+				<!-- Information about the program itself -->
+				<attribute name="Implementation-Vendor" value="1up4dev.org"/>
+				<attribute name="Implementation-Title" value="DoIt"/>
+				<attribute name="Implementation-Version" value="0.1 beta ${DSTAMP}${TSTAMP}"/>
+				<!-- -->
+				<attribute name="Class-Path" value="lib/mirror-1.3.jar"/>
+				<attribute name="Main-Class" value="org.oneupfordev.doit.console.ConsoleApp"/>
+			</manifest>
+		</jar>
+		<copy todir="build/jar/lib">
+			<fileset dir="lib" includes="*.jar"/>
+		</copy>
 	</target>
 	
 </project>
