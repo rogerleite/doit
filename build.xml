@@ -7,7 +7,7 @@
 			<include name="*.java"/>
 		</fileset>
 		<fileset dir="lib">
-			<include name="*.jar"/>			
+			<include name="*.jar"/>
 		</fileset>
 	</path>
 	
@@ -20,41 +20,45 @@
 		<path location="build/bin" />
 	</path>	
 
-    <!-- Remove classes directory for clean build -->
-    <target name="clean" description="Prepare for clean build">
-     	<echo>Preparing build...</echo>
-     	<delete dir="build"/>
-      	<mkdir dir="build/bin"/>
-      	<mkdir dir="build/test"/>    	
-    </target>
+	<!-- Remove classes directory for clean build -->
+	<target name="clean" description="Prepare for clean build">
+		<echo>Cleaning folder build ...</echo>
+		<delete dir="build"/>
+	</target>
 	
-    <!-- Normal build of application -->
-    <target name="compile" depends="clean">
-        <echo>Compiling classes...</echo>
-        <javac srcdir="src" destdir="build/bin" debug="true" debuglevel="lines,vars">
-            <classpath refid="classes.classpath"/>
-        </javac>
-        <echo>Compiling tests...</echo>
-        <javac srcdir="test" destdir="build/test" debug="true" debuglevel="lines,vars">
-            <classpath refid="tests.classpath"/>
-        </javac>    	
-    </target>
+	<!-- Normal build of application -->
+	<target name="compile" depends="clean">
+		<echo>Compiling classes...</echo>
+		<mkdir dir="build/bin"/>
+		<javac srcdir="src" destdir="build/bin" debug="true" debuglevel="lines,vars">
+			<classpath refid="classes.classpath"/>
+		</javac>
+
+		<echo>Compiling tests...</echo>
+		<mkdir dir="build/test"/>
+		<javac srcdir="test" destdir="build/test" debug="true" debuglevel="lines,vars">
+			<classpath refid="tests.classpath"/>
+		</javac>
+	</target>
 
 	<!-- Run project tests -->
 	<target name="test" depends="compile">
 		<echo message="Running tests..."/>
-		<junit printsummary="yes" fork="yes" haltonfailure="yes" showoutput="true">
+		<junit printsummary="withOutAndErr" fork="yes" haltonfailure="yes" showoutput="true" >
 			<classpath refid="tests.classpath"/>
 			<formatter type="xml"/>
-			<batchtest>
-				<fileset dir="build/test"/>
+			<batchtest todir="build">
+				<fileset dir="build/test" includes="**/*Test*"/>
 			</batchtest>
 		</junit>
 	</target>
 	
-    <!-- Build project and create distribution-->
-    <target name="package" depends="compile, test">
-    	<jar destfile="doit.jar" basedir="build/bin" />
-    </target>
+	<!-- Build project and create distribution-->
+	<target name="package" depends="compile, test">
+		<copy todir="build/bin">
+			<fileset dir="." includes="README*" />
+		</copy>
+		<jar destfile="build/doit.jar" basedir="build/bin" />
+	</target>
 	
 </project>
