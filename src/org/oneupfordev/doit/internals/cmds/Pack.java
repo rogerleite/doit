@@ -7,6 +7,7 @@ import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.Result;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
 import org.oneupfordev.doit.results.TextResult;
+import org.oneupfordev.doit.stuff.Context;
 
 /**
  * Support command for DoIt Dictionary actions.
@@ -29,6 +30,15 @@ class Pack implements CallableExpression {
 
 	public Pack show() {
 		return this;
+	}
+
+	public Context getContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void setContext(Context context) {
+		// TODO Auto-generated method stub
 	}
 
 }

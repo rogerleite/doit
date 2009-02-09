@@ -3,7 +3,8 @@
  */
 package org.oneupfordev.doit.parsers;
 
-import static junit.framework.TestCase.*;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,13 +15,14 @@ import org.oneupfordev.doit.Dictionary;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
+import org.oneupfordev.doit.stuff.Context;
 
 
 /**
  * Tests of Expression Parser.
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
  */
-public class TestExpressionParser {
+public class ExpressionParserTest {
 
 	private Dictionary getDictionary() {
 		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
@@ -34,36 +36,35 @@ public class TestExpressionParser {
 	}
 
 	@Test
-	public void parseArguments() {
-		Expressions expressions = new Expressions(getDictionary());
-		List<Argument> args = new ArrayList<Argument>();
-		String result;
-
-		result = expressions.parseArguments("cmd", args);
-		assertEquals(0, args.size());
-		assertEquals("cmd", result);
-		result = expressions.parseArguments("cmd 'arg1'", args);
-		assertEquals(1, args.size());
-		assertEquals("cmd $p1", result);
-		result = expressions.parseArguments("cmd 'arg1' inner 'arg2'", args);
-		assertEquals(2, args.size());
-		assertEquals("cmd $p1 inner $p2", result);
-	}
-
-	@Test
 	public void parseValidExpression() {
 		/*
 		 * ExpressionValid annotations:
 		 * ExprDescription(cmds={"test"})
 		 * InnerCmdDescriptor(name="test", innerCmds={"testInner", "testInner2"})
 		 */
-		Expressions exp = new Expressions(getDictionary());
-		CallableExpression ce = exp.parse("expressionvalid");
+		ExpressionParser expParser = new ExpressionParser(new Context(), getDictionary());
+		CallableExpression ce = expParser.parse("expressionvalid");
 		checkCallableExpression(ce, true, false, null, false, false,
 				false, null, false, null);
 
-		ce = exp.parse("expressionvalid 'arg_constructor'");
+		ce = expParser.parse("expressionvalid 'arg_constructor'");
 		checkCallableExpression(ce, false, true, "arg_constructor", false, false,
+				false, null, false, null);
+
+		ce = expParser.parse("expressionvalid test");
+		checkCallableExpression(ce, true, false, null, true, false,
+				false, null, false, null);
+
+		ce = expParser.parse("expressionvalid 'arg_constructor' test");
+		checkCallableExpression(ce, false, true, "arg_constructor", true, false,
+				false, null, false, null);
+
+		ce = expParser.parse("expressionvalid test testInner");
+		checkCallableExpression(ce, true, false, null, true, true,
+				false, null, false, null);
+
+		ce = expParser.parse("expressionvalid 'arg_constructor' test testInner");
+		checkCallableExpression(ce, false, true, "arg_constructor", true, true,
 				false, null, false, null);
 	}
 

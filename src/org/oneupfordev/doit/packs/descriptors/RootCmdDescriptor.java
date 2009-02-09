@@ -18,11 +18,15 @@ import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
  */
 public class RootCmdDescriptor extends CmdDescriptor {
 
-	//private Class<? extends CallableExpression> classExpression;
+	private Class<? extends CallableExpression> classExpression;
 
 	public RootCmdDescriptor(Class<? extends CallableExpression> classExpression) {
-		//this.classExpression = classExpression;
+		this.classExpression = classExpression;
 		setName(classExpression.getSimpleName());
+	}
+
+	public Class<? extends CallableExpression> getClassExpression() {
+		return this.classExpression;
 	}
 
 	@Override
