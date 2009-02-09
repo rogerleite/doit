@@ -3,6 +3,7 @@
  */
 package org.oneupfordev.doit.parsers;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import net.vidageek.mirror.ClassController;
@@ -73,11 +74,15 @@ public class ExpressionParser {
 
 		callable.setContext(context);
 
-		/*ClassController<?> callableController = Mirror.on(callable.getClass());
-		Field rightSideField = callableController.reflect().field("rightSide");
+		ClassController<?> callableController = Mirror.on(callable.getClass());
+		/*Field rightSideField = callableController.reflect().field("rightSide");
 		if (rightSideField != null) {
 			Mirror.on(callable).set().field(rightSideField).withValue(statement.getRightSide());
 		}*/
+		Field dictionaryField = callableController.reflect().field("dictionary");
+		if (dictionaryField != null) {
+			Mirror.on(callable).set().field(dictionaryField).withValue(dictionary);
+		}
 
 		return callable;
 	}

@@ -3,8 +3,7 @@
  */
 package org.oneupfordev.doit.parsers;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +45,8 @@ public class ExpressionParserTest {
 		CallableExpression ce = expParser.parse("expressionvalid");
 		checkCallableExpression(ce, true, false, null, false, false,
 				false, null, false, null);
+		assertNotNull("Context field cannot be null.", ce.getContext());
+		assertNotNull("\"Hidden\" Dictionary field cannot be null.", ((ExpressionValid) ce).getDictionary());
 
 		ce = expParser.parse("expressionvalid 'arg_constructor'");
 		checkCallableExpression(ce, false, true, "arg_constructor", false, false,

@@ -3,6 +3,7 @@
  */
 package org.oneupfordev.doit;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -49,6 +50,13 @@ public class Dictionary {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * @return <b>Read Only</b> {@link Set} of loaded {@link ExprPackDescriptor}s.
+	 */
+	public Set<ExprPackDescriptor> getPackDescriptors() {
+		return Collections.unmodifiableSet(setPackDescriptors);
 	}
 
 }
