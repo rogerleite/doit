@@ -111,7 +111,7 @@ public class CmdDescriptor {
 	public String toString() {
 		StringBuilder builder = new StringBuilder("'" + this.name + "'");
 		builder.append(" ").append(argumentType);
-		if (innerCmds != null) {
+		if (innerCmds != null && !innerCmds.isEmpty()) {
 			builder.append(" innerCmds: [ ");
 			for (CmdDescriptor cmd : innerCmds) {
 				builder.append(cmd);

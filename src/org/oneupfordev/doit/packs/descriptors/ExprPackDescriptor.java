@@ -63,7 +63,7 @@ public class ExprPackDescriptor {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder("'" + this.name + "'");
-		if (descriptors != null) {
+		if (descriptors != null && !descriptors.isEmpty()) {
 			builder.append(" descriptors: [ ");
 			for (RootCmdDescriptor rootCmd : descriptors) {
 				builder.append(rootCmd);
@@ -71,7 +71,7 @@ public class ExprPackDescriptor {
 			builder.append(" ]");
 		}
 
-		if (errors != null) {
+		if (errors != null && !errors.isEmpty()) {
 			builder.append(" errors: [ ");
 			for (Throwable t : errors) {
 				builder.append(t.getMessage());

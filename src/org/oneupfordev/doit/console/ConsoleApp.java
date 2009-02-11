@@ -19,13 +19,16 @@ import org.oneupfordev.doit.stuff.Context;
  */
 public class ConsoleApp {
 
+	private static final String QUIT = "quit!";
+
 	public static void main(String[] args) {
 		System.out.println("=========================");
-		System.out.println("Welcome ('quit' to quit!)");
-		System.out.print("Getting ExpressionParser ...");
+		System.out.println("Welcome to DoIt Console!");
+		System.out.print("\nGetting ExpressionParser ...");
 		ExpressionParser ep = getExpressionParser();
 		System.out.print(" done!\n");
 		System.out.println("=========================");
+		System.out.println(getHelpMessage());
 
 		Scanner sc = new Scanner(System.in);
 		sc.useDelimiter("\n");
@@ -33,7 +36,7 @@ public class ConsoleApp {
 		System.out.print(getTitlePrompt());
 		while (sc.hasNextLine()){
 			String userCmd = sc.next();
-			if ("quit".equalsIgnoreCase(userCmd)) {
+			if (QUIT.equalsIgnoreCase(userCmd.trim())) {
 				break;
 			}
 			System.out.println("Executing ... " + userCmd);
@@ -45,6 +48,7 @@ public class ConsoleApp {
 			} catch (Throwable t) {
 				System.out.println("ERROR: " + t.getMessage());
 				//t.printStackTrace();
+				System.out.println("\n" + getHelpMessage());
 			}
 
 			System.out.print(getTitlePrompt());
@@ -65,6 +69,10 @@ public class ConsoleApp {
 		dic.add(packDescriptor);
 
 		return new ExpressionParser(ctx, dic);
+	}
+
+	private static String getHelpMessage() {
+		return "Type '" + QUIT + "' to exit from here!";
 	}
 
 }

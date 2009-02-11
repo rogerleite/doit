@@ -20,6 +20,7 @@ public class InternalExpressionPack implements ExpressionPack {
 			new ArrayList<Class<? extends CallableExpression>>();
 
 		expressions.add(Pack.class);
+		expressions.add(Context.class);
 
 		return expressions;
 	}

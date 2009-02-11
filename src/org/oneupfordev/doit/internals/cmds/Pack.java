@@ -13,7 +13,7 @@ import org.oneupfordev.doit.results.TextResult;
 import org.oneupfordev.doit.stuff.Context;
 
 /**
- * Support command for DoIt Dictionary actions.
+ * Support command for DoIt {@link Dictionary} actions.
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
  */
 @RootCmd(cmds={"show"})
@@ -22,7 +22,7 @@ class Pack implements CallableExpression {
 	private Dictionary dictionary = null;
 
 	private enum Action {
-		SHOW
+		DEFAULT_SHOW
 	}
 
 	private Action selectedAction = null;
@@ -30,7 +30,7 @@ class Pack implements CallableExpression {
 	public Result doIt() {
 		Result result = new TextResult("Action not defined.");
 
-		if (selectedAction == Action.SHOW) {
+		if (selectedAction == Action.DEFAULT_SHOW) {
 			StringBuilder packs = new StringBuilder("Packs:\n");
 			for (ExprPackDescriptor packDescr : dictionary.getPackDescriptors()) {
 				packs.append("\t").append(packDescr.getName()).append(":\n");
@@ -44,16 +44,16 @@ class Pack implements CallableExpression {
 		return result;
 	}
 
+	public Pack show() {
+		selectedAction = Action.DEFAULT_SHOW;
+		return this;
+	}
+
 	public String getAssign() {
 		return null;
 	}
 
 	public void setAssign(String assign) {
-	}
-
-	public Pack show() {
-		selectedAction = Action.SHOW;
-		return this;
 	}
 
 	public Context getContext() {
