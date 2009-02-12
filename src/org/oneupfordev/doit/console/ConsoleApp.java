@@ -6,10 +6,8 @@ package org.oneupfordev.doit.console;
 import java.util.Scanner;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.Dictionary;
 import org.oneupfordev.doit.Result;
-import org.oneupfordev.doit.internals.cmds.InternalExpressionPack;
-import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
+import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.parsers.ExpressionParser;
 import org.oneupfordev.doit.stuff.Context;
 
@@ -65,8 +63,7 @@ public class ConsoleApp {
 		Context ctx = new Context();
 
 		Dictionary dic = new Dictionary();
-		ExprPackDescriptor packDescriptor = dic.load(new InternalExpressionPack());
-		dic.add(packDescriptor);
+		dic.loadInternalPack();
 
 		return new ExpressionParser(ctx, dic);
 	}

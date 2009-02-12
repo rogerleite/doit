@@ -1,8 +1,8 @@
 package org.oneupfordev.doit.packs.descriptors;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.Dictionary;
 import org.oneupfordev.doit.Result;
+import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.stuff.Context;
 
 public class NakedExampleExpression implements CallableExpression {

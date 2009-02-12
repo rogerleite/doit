@@ -1,13 +1,15 @@
 /**
  * 
  */
-package org.oneupfordev.doit;
+package org.oneupfordev.doit.dictionary;
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
+import org.oneupfordev.doit.internals.cmds.InternalExpressionPack;
 import org.oneupfordev.doit.packs.PackLoader;
 import org.oneupfordev.doit.packs.PackLoaderByAnnotation;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
@@ -34,6 +36,11 @@ public class Dictionary {
 			throw new RuntimeException("packDescriptor " + packDescriptor.getName() + " already exists.");
 		}
 		setPackDescriptors.add(packDescriptor);
+	}
+
+	public void loadInternalPack() {
+		ExprPackDescriptor packDescriptor = load(new InternalExpressionPack());
+		add(packDescriptor);
 	}
 
 	public RootCmdDescriptor find(final String expression) {
