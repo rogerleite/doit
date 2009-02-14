@@ -6,9 +6,9 @@ package org.oneupfordev.doit.internals.cmds;
 import java.util.Map.Entry;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.Result;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
 import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
+import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.results.TextResult;
 
 /**
@@ -17,7 +17,7 @@ import org.oneupfordev.doit.results.TextResult;
  */
 @RootCmd(cmds={"show", "add"})
 @Cmd(name="add", innerCmds={"value"})
-public class Context implements CallableExpression {
+class Context implements CallableExpression {
 
 	org.oneupfordev.doit.stuff.Context ctx = null;
 

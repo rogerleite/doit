@@ -10,11 +10,11 @@ import java.util.List;
 
 import org.junit.Test;
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 import org.oneupfordev.doit.stuff.Context;
+import org.oneupfordev.doit.stuff.Dictionary;
 
 
 /**

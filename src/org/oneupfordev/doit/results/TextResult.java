@@ -3,7 +3,6 @@
  */
 package org.oneupfordev.doit.results;
 
-import org.oneupfordev.doit.Result;
 
 /**
  * Simple Text Result.

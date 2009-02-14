@@ -6,10 +6,10 @@ package org.oneupfordev.doit.console;
 import java.util.Scanner;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.Result;
-import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.parsers.ExpressionParser;
+import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.stuff.Context;
+import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
  * Console Application to run {@link CallableExpression}s.

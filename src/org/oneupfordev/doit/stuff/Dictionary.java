@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.oneupfordev.doit.dictionary;
+package org.oneupfordev.doit.stuff;
 
 import java.util.Collections;
 import java.util.HashSet;

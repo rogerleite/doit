@@ -11,11 +11,11 @@ import net.vidageek.mirror.Mirror;
 import net.vidageek.mirror.ObjectController;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.parsers.expr.Expression;
 import org.oneupfordev.doit.parsers.expr.Word;
 import org.oneupfordev.doit.stuff.Context;
+import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>

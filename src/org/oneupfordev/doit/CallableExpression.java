@@ -3,6 +3,7 @@
  */
 package org.oneupfordev.doit;
 
+import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.stuff.Context;
 
 /**

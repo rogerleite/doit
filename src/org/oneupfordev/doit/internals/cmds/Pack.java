@@ -4,13 +4,13 @@
 package org.oneupfordev.doit.internals.cmds;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.Result;
-import org.oneupfordev.doit.dictionary.Dictionary;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
+import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.results.TextResult;
 import org.oneupfordev.doit.stuff.Context;
+import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
  * Support command for DoIt {@link Dictionary} actions.
