@@ -15,6 +15,8 @@ import org.oneupfordev.doit.CallableExpression;
  */
 public class Context {
 
+	static final String PACKPATH_KEY = "doit.packpath";
+
 	//TODO: make this default constructor as protected
 
 	private Map<String, Object> attributes = new HashMap<String, Object>();

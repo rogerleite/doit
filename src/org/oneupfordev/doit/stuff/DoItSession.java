@@ -23,9 +23,9 @@ import org.oneupfordev.doit.parsers.ExpressionParser;
  */
 public class DoItSession {
 
-	private Context context = null;
-	private Dictionary dictionary = null;
-	private ExpressionParser expressionParser = null;
+	Context context = null;
+	Dictionary dictionary = null;
+	ExpressionParser expressionParser = null;
 
 	DoItSession(final Context context, final Dictionary dictionary) {
 		this.context = context;

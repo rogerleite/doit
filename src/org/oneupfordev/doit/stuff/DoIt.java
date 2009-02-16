@@ -10,8 +10,6 @@ package org.oneupfordev.doit.stuff;
  */
 public class DoIt {
 
-	private static final String PACKPATH_KEY = "doit.packpath";
-
 	/** Default Constructor. */
 	public DoIt() {}
 
@@ -21,13 +19,16 @@ public class DoIt {
 
 	public DoItSession createSession(boolean loadExternalPacks) {
 		Context context = new Context();
-		context.setAttribute(PACKPATH_KEY, "packs");
+		context.setAttribute(Context.PACKPATH_KEY, "packs");
+		return getDoItSession(context, loadExternalPacks);
+	}
 
+	DoItSession getDoItSession(final Context context, boolean loadExternalPacks) {
 		Dictionary dictionary = new Dictionary();
 		DoItSession session = new DoItSession(context, dictionary);
 		session.loadInternalPack();
 		if (loadExternalPacks) {
-			session.loadExternalPacks(context.getAttribute(PACKPATH_KEY).toString());
+			session.loadExternalPacks(context.getAttribute(Context.PACKPATH_KEY).toString());
 		}
 		return session;
 	}
