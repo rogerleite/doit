@@ -7,11 +7,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
-import org.oneupfordev.doit.internals.cmds.InternalExpressionPack;
-import org.oneupfordev.doit.packs.PackLoader;
-import org.oneupfordev.doit.packs.PackLoaderByAnnotation;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
@@ -21,13 +17,13 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  */
 public class Dictionary {
 
-	//TODO: make this default constructor as protected
-
 	private Set<ExprPackDescriptor> setPackDescriptors = new HashSet<ExprPackDescriptor>();
 
-	public ExprPackDescriptor load(ExpressionPack expressionPack) {
-		PackLoader packLoader = new PackLoaderByAnnotation();
-		return packLoader.load(expressionPack);
+	/**
+	 * Default access.<br>
+	 * Generally {@link DoIt} creates this object.
+	 */
+	Dictionary() {
 	}
 
 	public void add(ExprPackDescriptor packDescriptor) {
@@ -38,11 +34,6 @@ public class Dictionary {
 			throw new RuntimeException("packDescriptor " + packDescriptor.getName() + " already exists.");
 		}
 		setPackDescriptors.add(packDescriptor);
-	}
-
-	public void loadInternalPack() {
-		ExprPackDescriptor packDescriptor = load(new InternalExpressionPack());
-		add(packDescriptor);
 	}
 
 	public RootCmdDescriptor find(final String expression) {

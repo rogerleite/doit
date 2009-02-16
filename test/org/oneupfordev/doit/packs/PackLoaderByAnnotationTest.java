@@ -110,7 +110,7 @@ public class PackLoaderByAnnotationTest {
 			assertTrue(ex.getMessage(), true);
 		}
 		try {
-			ExampleExpressionPack exPackWithNullExpressions = new ExampleExpressionPack("mock", null);
+			ExampleExpressionPack exPackWithNullExpressions = new ExampleExpressionPack("mock");
 			pl.load(exPackWithNullExpressions);
 			fail("Load with list null have to throw an ExpressionIllegalArgumentException.");
 		} catch (ExpressionIllegalArgumentException ex) {

@@ -17,9 +17,14 @@ public class Context {
 
 	static final String PACKPATH_KEY = "doit.packpath";
 
-	//TODO: make this default constructor as protected
-
 	private Map<String, Object> attributes = new HashMap<String, Object>();
+
+	/**
+	 * Default access.<br>
+	 * Generally {@link DoIt} creates this object.
+	 */
+	Context() {
+	}
 
 	public Object getAttribute(String key) {
 		return attributes.get(key);

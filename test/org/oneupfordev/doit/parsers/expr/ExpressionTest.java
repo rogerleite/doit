@@ -3,18 +3,15 @@
  */
 package org.oneupfordev.doit.parsers.expr;
 
-import java.util.ArrayList;
-import java.util.List;
+import static junit.framework.Assert.assertEquals;
 
 import org.junit.Test;
-import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
-import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.stuff.Dictionary;
-
-import static junit.framework.TestCase.*;
+import org.oneupfordev.doit.stuff.DoItMock;
+import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 /**
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
@@ -22,14 +19,13 @@ import static junit.framework.TestCase.*;
 public class ExpressionTest {
 
 	private Dictionary getDictionary() {
-		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
-		validList.add(ExpressionValid.class);
-		ExampleExpressionPack validPack = new ExampleExpressionPack("example", validList);
+		DoItMock doItMock = new DoItMock();
+		DoItSessionMock sessionMock = (DoItSessionMock) doItMock.createSession();
 
-		Dictionary dic = new Dictionary();
-		ExprPackDescriptor descr = dic.load(validPack);
-		dic.add(descr);
-		return dic;
+		ExampleExpressionPack validPack = new ExampleExpressionPack("example", new Class<?>[] {ExpressionValid.class});
+		sessionMock.load(validPack);
+
+		return sessionMock.getDictionary();
 	}
 
 	@Test

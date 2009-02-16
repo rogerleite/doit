@@ -6,10 +6,9 @@ package org.oneupfordev.doit.console;
 import java.util.Scanner;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.parsers.ExpressionParser;
 import org.oneupfordev.doit.results.Result;
-import org.oneupfordev.doit.stuff.Context;
-import org.oneupfordev.doit.stuff.Dictionary;
+import org.oneupfordev.doit.stuff.DoIt;
+import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Console Application to run {@link CallableExpression}s.
@@ -23,7 +22,7 @@ public class ConsoleApp {
 		System.out.println("=========================");
 		System.out.println("Welcome to DoIt Console!");
 		System.out.print("\nGetting ExpressionParser ...");
-		ExpressionParser ep = getExpressionParser();
+		DoItSession session = new DoIt().createSession(true);
 		System.out.print(" done!\n");
 		System.out.println("=========================");
 		System.out.println(getHelpMessage());
@@ -40,7 +39,7 @@ public class ConsoleApp {
 			System.out.println("Executing ... " + userCmd);
 
 			try {
-				CallableExpression ce = ep.parse(userCmd);
+				CallableExpression ce = session.parse(userCmd);
 				Result result = ce.doIt();
 				System.out.println(result.textValue());
 			} catch (Throwable t) {
@@ -57,15 +56,6 @@ public class ConsoleApp {
 	private static String getTitlePrompt() {
 		String userAt = System.getenv("USERNAME") + "@DoIt$ ";
 		return userAt;
-	}
-
-	private static ExpressionParser getExpressionParser() {
-		Context ctx = new Context();
-
-		Dictionary dic = new Dictionary();
-		dic.loadInternalPack();
-
-		return new ExpressionParser(ctx, dic);
 	}
 
 	private static String getHelpMessage() {

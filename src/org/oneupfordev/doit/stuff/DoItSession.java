@@ -27,6 +27,12 @@ public class DoItSession {
 	Dictionary dictionary = null;
 	ExpressionParser expressionParser = null;
 
+	/**
+	 * Default access.<br>
+	 * Generally {@link DoIt} creates this object.
+	 * @param context with "pack path" attribute.
+	 * @param dictionary empty one.
+	 */
 	DoItSession(final Context context, final Dictionary dictionary) {
 		this.context = context;
 		this.dictionary = dictionary;

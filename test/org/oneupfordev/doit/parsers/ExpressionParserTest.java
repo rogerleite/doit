@@ -3,18 +3,16 @@
  */
 package org.oneupfordev.doit.parsers;
 
-import static junit.framework.Assert.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 import org.junit.Test;
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
-import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
-import org.oneupfordev.doit.stuff.Context;
-import org.oneupfordev.doit.stuff.Dictionary;
+import org.oneupfordev.doit.stuff.DoItMock;
+import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 
 /**
@@ -23,15 +21,14 @@ import org.oneupfordev.doit.stuff.Dictionary;
  */
 public class ExpressionParserTest {
 
-	private Dictionary getDictionary() {
-		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
-		validList.add(ExpressionValid.class);
-		ExampleExpressionPack validPack = new ExampleExpressionPack("example", validList);
+	private DoItSessionMock getDoItSessionMock() {
+		DoItMock doItMock = new DoItMock();
+		DoItSessionMock sessionMock = (DoItSessionMock) doItMock.createSession();
 
-		Dictionary dic = new Dictionary();
-		ExprPackDescriptor descr = dic.load(validPack);
-		dic.add(descr);
-		return dic;
+		ExampleExpressionPack validPack = new ExampleExpressionPack("example", new Class<?>[] {ExpressionValid.class});
+		sessionMock.load(validPack);
+
+		return sessionMock;
 	}
 
 	@Test
@@ -41,30 +38,30 @@ public class ExpressionParserTest {
 		 * ExprDescription(cmds={"test"})
 		 * InnerCmdDescriptor(name="test", innerCmds={"testInner", "testInner2"})
 		 */
-		ExpressionParser expParser = new ExpressionParser(new Context(), getDictionary());
-		CallableExpression ce = expParser.parse("expressionvalid");
+		DoItSessionMock sessionMock = getDoItSessionMock();
+		CallableExpression ce = sessionMock.parse("expressionvalid");
 		checkCallableExpression(ce, true, false, null, false, false,
 				false, null, false, null);
 		assertNotNull("Context field cannot be null.", ce.getContext());
 		assertNotNull("\"Hidden\" Dictionary field cannot be null.", ((ExpressionValid) ce).getDictionary());
 
-		ce = expParser.parse("expressionvalid 'arg_constructor'");
+		ce = sessionMock.parse("expressionvalid 'arg_constructor'");
 		checkCallableExpression(ce, false, true, "arg_constructor", false, false,
 				false, null, false, null);
 
-		ce = expParser.parse("expressionvalid test");
+		ce = sessionMock.parse("expressionvalid test");
 		checkCallableExpression(ce, true, false, null, true, false,
 				false, null, false, null);
 
-		ce = expParser.parse("expressionvalid 'arg_constructor' test");
+		ce = sessionMock.parse("expressionvalid 'arg_constructor' test");
 		checkCallableExpression(ce, false, true, "arg_constructor", true, false,
 				false, null, false, null);
 
-		ce = expParser.parse("expressionvalid test testInner");
+		ce = sessionMock.parse("expressionvalid test testInner");
 		checkCallableExpression(ce, true, false, null, true, true,
 				false, null, false, null);
 
-		ce = expParser.parse("expressionvalid 'arg_constructor' test testInner");
+		ce = sessionMock.parse("expressionvalid 'arg_constructor' test testInner");
 		checkCallableExpression(ce, false, true, "arg_constructor", true, true,
 				false, null, false, null);
 	}
