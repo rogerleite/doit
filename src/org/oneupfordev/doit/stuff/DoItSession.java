@@ -27,7 +27,7 @@ public class DoItSession {
 	private Dictionary dictionary = null;
 	private ExpressionParser expressionParser = null;
 
-	protected DoItSession(final Context context, final Dictionary dictionary) {
+	DoItSession(final Context context, final Dictionary dictionary) {
 		this.context = context;
 		this.dictionary = dictionary;
 		expressionParser = new ExpressionParser(this.context, this.dictionary);

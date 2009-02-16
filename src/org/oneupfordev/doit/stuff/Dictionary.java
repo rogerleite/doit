@@ -21,6 +21,8 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  */
 public class Dictionary {
 
+	//TODO: make this default constructor as protected
+
 	private Set<ExprPackDescriptor> setPackDescriptors = new HashSet<ExprPackDescriptor>();
 
 	public ExprPackDescriptor load(ExpressionPack expressionPack) {

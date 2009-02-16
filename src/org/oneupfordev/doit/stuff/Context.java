@@ -15,6 +15,8 @@ import org.oneupfordev.doit.CallableExpression;
  */
 public class Context {
 
+	//TODO: make this default constructor as protected
+
 	private Map<String, Object> attributes = new HashMap<String, Object>();
 
 	public Object getAttribute(String key) {
