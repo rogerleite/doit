@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.oneupfordev.doit.ExpressionPack;
+
 /**
  * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
  */
@@ -38,6 +40,18 @@ public class FolderPack {
 			}
 		}
 		return result.toString();
+	}
+
+	/**
+	 * <p>Put the jar file and its lib files in ClassLoader.<br>
+	 * Look for the attribute 'DoIt-PackClass' in Manifest of the Jar.<br>
+	 * </p>
+	 * @return an instance of {@link ExpressionPack} of the jar file.
+	 * @throws RuntimeException if manifest or attribute 'DoIt-PackClass' not found.
+	 */
+	public ExpressionPack getExpressionPack() {
+		//DoIt-PackClass
+		return null;
 	}
 
 }
