@@ -16,23 +16,37 @@ import org.oneupfordev.doit.ExpressionPack;
  */
 public class PackFinder {
 
-	private FileFilter directoryOnlyFilter = new FileFilter() {
+	private static FileFilter directoryOnlyFilter = new FileFilter() {
 		public boolean accept(File file) {
 			return file.isDirectory();
 		}
 	};
 
-	private FileFilter jarOnlyFilter = new FileFilter() {
+	private static FileFilter jarOnlyFilter = new FileFilter() {
 		public boolean accept(File file) {
 			return file.isFile() && file.getName().toLowerCase().endsWith(".jar");
 		}
 	};
 
+	/**
+	 * <p>This method uses the following rules to look for expression packs:
+	 * <ul>
+	 * <li>First, list all folders inside the directory parameter.</li>
+	 * <li>Second, for each folder, inside should be only <b>one</b> jar file.
+	 * If inside contains more then one jar, pack will be ignored.</li>
+	 * <li>Third, and <u>optional</u>, if pack has dependencies, pack finder will
+	 * read the lib folder (inside the pack folder).</li>
+	 * </p>
+	 * For more details in this operation, please see the online documentation.
+	 * @param directory to look for new expression packs.
+	 * @return list of {@link FolderPack} found in directory parameter.
+	 */
 	public List<FolderPack> lookForPacks(String directory) {
-		//TODO: add javadoc with details of this operation.
+		//TODO: add javadoc details for exception cases.
 		File dir = new File(directory);
 		if (!dir.exists() || !dir.isDirectory()) {
-			throw new RuntimeException("Directory not valid: '" + directory + "'.");
+			String m = String.format("Not valid directory '%s'.", directory);
+			throw new RuntimeException(m);
 		}
 		List<FolderPack> packs = new ArrayList<FolderPack>();
 		for (File subDir : dir.listFiles(directoryOnlyFilter)) {
@@ -53,6 +67,7 @@ public class PackFinder {
 	}
 
 	public List<ExpressionPack> instantiatePacks(List<FolderPack> packs) {
+		//TODO add javadoc with possible exceptions
 		List<ExpressionPack> exprPacks = new ArrayList<ExpressionPack>();
 		JarFileLoader jarFileLoader = new JarFileLoader();
 		for (FolderPack folderPack : packs) {
