@@ -20,6 +20,14 @@
 		<path location="build/bin" />
 	</path>	
 
+	<path id="tests.classpath.resources">
+		<pathelement location="build/test"/>
+		<fileset dir="build/test/testPackFinder">
+			<include name="**/**"/>
+		</fileset>
+	</path>	
+
+
 	<!-- Remove classes directory for clean build -->
 	<target name="clean" description="Prepare for clean build">
 		<tstamp/>
@@ -44,9 +52,14 @@
 
 	<!-- Run project tests -->
 	<target name="test" depends="compile">
+		<echo message="Copying required resources ..."/>
+		<copy todir="build/test/testPackFinder" includeemptydirs="true" overwrite="true">
+			<fileset dir="test/testPackFinder"/>
+		</copy>
 		<echo message="Running tests..."/>
-		<junit printsummary="withOutAndErr" fork="yes" haltonfailure="yes" showoutput="true" >
+		<junit printsummary="withOutAndErr" fork="yes" haltonfailure="no" showoutput="true" >
 			<classpath refid="tests.classpath"/>
+			<classpath refid="tests.classpath.resources"/>
 			<formatter type="xml"/>
 			<batchtest todir="build">
 				<fileset dir="build/test" includes="**/*Test*"/>

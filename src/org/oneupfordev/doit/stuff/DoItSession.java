@@ -3,11 +3,15 @@
  */
 package org.oneupfordev.doit.stuff;
 
+import java.util.List;
+
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.internals.cmds.InternalExpressionPack;
 import org.oneupfordev.doit.packs.PackLoader;
 import org.oneupfordev.doit.packs.PackLoaderByAnnotation;
+import org.oneupfordev.doit.packs.search.FolderPack;
+import org.oneupfordev.doit.packs.search.PackFinder;
 import org.oneupfordev.doit.parsers.ExpressionParser;
 
 /**
@@ -44,11 +48,12 @@ public class DoItSession {
 	}
 
 	void loadExternalPacks(final String packPath) {
-		//get "packpath" from context
-		//new PackFinder()
-		//for each path in packpath
-			//packs = packFinder.find(path)
-			//load(packs)
+		PackFinder packFinder = new PackFinder();
+		List<FolderPack> packs = packFinder.lookForPacks(packPath);
+		List<ExpressionPack> exprPacks = packFinder.instantiatePacks(packs);
+		for (ExpressionPack expPack : exprPacks) {
+			load(expPack);
+		}
 	}
 
 	public void load(ExpressionPack expressionPack) {

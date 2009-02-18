@@ -22,7 +22,13 @@ public class ConsoleApp {
 		System.out.println("=========================");
 		System.out.println("Welcome to DoIt Console!");
 		System.out.print("\nGetting ExpressionParser ...");
-		DoItSession session = new DoIt().createSession(true);
+		DoItSession session = null;
+		try {
+			session = new DoIt().createSession(true);
+		} catch(Throwable t) {
+			t.printStackTrace();
+			throw new RuntimeException(t.getMessage(), t);
+		}
 		System.out.print(" done!\n");
 		System.out.println("=========================");
 		System.out.println(getHelpMessage());

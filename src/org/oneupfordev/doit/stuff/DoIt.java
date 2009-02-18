@@ -3,6 +3,8 @@
  */
 package org.oneupfordev.doit.stuff;
 
+import java.net.URL;
+
 
 /**
  * It is the object responsible for creating new {@link DoItSession}s.
@@ -18,8 +20,7 @@ public class DoIt {
 	}
 
 	public DoItSession createSession(boolean loadExternalPacks) {
-		Context context = new Context();
-		context.setAttribute(Context.PACKPATH_KEY, "packs");
+		Context context = createContext();
 		return getDoItSession(context, loadExternalPacks);
 	}
 
@@ -31,6 +32,14 @@ public class DoIt {
 			session.loadExternalPacks(context.getAttribute(Context.PACKPATH_KEY).toString());
 		}
 		return session;
+	}
+
+	Context createContext() {
+		Context context = new Context();
+		//URL packsUrl = DoIt.class.getResource("../../../../packs/");
+		//context.setAttribute(Context.PACKPATH_KEY, packsUrl.getPath());
+		context.setAttribute(Context.PACKPATH_KEY, "packs");
+		return context;
 	}
 
 }
