@@ -3,7 +3,6 @@
  */
 package org.oneupfordev.doit.stuff;
 
-import java.net.URL;
 
 
 /**
@@ -36,6 +35,7 @@ public class DoIt {
 
 	Context createContext() {
 		Context context = new Context();
+		//TODO: look for a solution to this problem
 		//URL packsUrl = DoIt.class.getResource("../../../../packs/");
 		//context.setAttribute(Context.PACKPATH_KEY, packsUrl.getPath());
 		context.setAttribute(Context.PACKPATH_KEY, "packs");
