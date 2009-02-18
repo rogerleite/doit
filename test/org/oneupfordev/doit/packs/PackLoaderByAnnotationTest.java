@@ -31,7 +31,7 @@ import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutInnerCmds2;
 public class PackLoaderByAnnotationTest {
 
 	@Test
-	public void validateOfExpressionWithoutCommandsAndEmptyConstructor() {
+	public void load_of_expression_without_commands_and_empty_constructor() {
 
 		PackLoader packLoader = new PackLoaderByAnnotation();
 		RootCmdDescriptor descr = packLoader.validateAndLoad(ExpressionWithoutConstructor.class);
@@ -42,21 +42,21 @@ public class PackLoaderByAnnotationTest {
 	}
 
 	@Test
-	public void validateOfExpressionWithoutInnerCmdsShouldThrowException() {
+	public void load_of_expression_without_innercmds_should_throw_exception() {
 		validateOfExpression(ExpressionWithoutInnerCmds.class,
 				ExpressionWithoutInnerCmds.class.getName(),
 				"Inner command 'test' not found");
 	}
 
 	@Test
-	public void validateOfExpressionWithoutInnerCmdsDeepTwoShouldThrowException() {
+	public void load_of_expression_without_innercmds_deeptwo_should_throw_exception() {
 		validateOfExpression(ExpressionWithoutInnerCmds2.class,
 				ExpressionWithoutInnerCmds2.class.getName(),
 				"Inner command 'testdeep2' not found");
 	}
 
 	@Test
-	public void exprCmdDescriptorIsOk() {
+	public void should_attributes_of_cmd_descriptor_is_ok() {
 		PackLoader packLoader = new PackLoaderByAnnotation();
 		RootCmdDescriptor descr = packLoader.validateAndLoad(ExpressionValid.class);
 		assertNotNull("ExprCmdDescriptor cannot be null.", descr);
@@ -101,7 +101,7 @@ public class PackLoaderByAnnotationTest {
 	}
 
 	@Test
-	public void validateOfExpressionPack() {
+	public void load_of_invalid_expression_pack_should_throw_exception() {
 		PackLoader pl = new PackLoaderByAnnotation();
 		try {
 			pl.load(null);
@@ -138,7 +138,7 @@ public class PackLoaderByAnnotationTest {
 	}
 
 	@Test
-	public void expressionPackDescriptorIsOk() {
+	public void should_pack_load_descriptors() {
 		PackLoader pl = new PackLoaderByAnnotation();
 
 		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();

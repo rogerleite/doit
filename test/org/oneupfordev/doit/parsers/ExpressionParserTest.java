@@ -32,7 +32,7 @@ public class ExpressionParserTest {
 	}
 
 	@Test
-	public void parseValidExpression() {
+	public void should_parse_valid_expressions() {
 		/*
 		 * ExpressionValid annotations:
 		 * ExprDescription(cmds={"test"})

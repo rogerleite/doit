@@ -15,7 +15,7 @@ import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 public class DoItTest {
 
 	@Test
-	public void createInternalSession() {
+	public void create_session_should_contain_context_and_dictionary_valids() {
 		DoItSession session = new DoIt().createSession();
 		assertEquals("Context contais pack path attribute.",
 				session.context.getAttribute(Context.PACKPATH_KEY), "packs");
@@ -26,11 +26,6 @@ public class DoItTest {
 
 		ExprPackDescriptor packDescr = session.dictionary.getPackDescriptors().iterator().next();
 		assertEquals("[Dic] Name of only Descriptor is 'internal'.", packDescr.getName(), "DoIt.Internal");
-	}
-
-	@Test
-	public void createExternalSession() {
-		//TODO: create test here
 	}
 
 }
