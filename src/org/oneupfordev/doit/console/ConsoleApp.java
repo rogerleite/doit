@@ -17,54 +17,81 @@ import org.oneupfordev.doit.stuff.DoItSession;
 public class ConsoleApp {
 
 	private static final String QUIT = "quit!";
+	private String userAt = null;
 
 	public static void main(String[] args) {
-		System.out.println("=========================");
-		System.out.println("Welcome to DoIt Console!");
-		System.out.print("\nGetting ExpressionParser ...");
-		DoItSession session = null;
-		try {
-			session = new DoIt().createSession(true);
-		} catch(Throwable t) {
-			t.printStackTrace();
-			throw new RuntimeException(t.getMessage(), t);
-		}
-		System.out.print(" done!\n");
-		System.out.println("=========================");
-		System.out.println(getHelpMessage());
+		ConsoleApp consoleApp = new ConsoleApp();
+		consoleApp.startConsole();
+	}
+
+	private ConsoleApp() {
+	}
+
+	public void startConsole() {
+		sysOutln("=========================");
+		sysOutln("Welcome to DoIt Console!");
+		sysOut("\nGetting ExpressionParser ...");
+		DoItSession session = createDoItSession();
+		sysOut(" done!\n");
+		sysOutln("=========================");
+		sysOutln(getHelpMessage());
 
 		Scanner sc = new Scanner(System.in);
 		sc.useDelimiter("\n");
 
-		System.out.print(getTitlePrompt());
+		sysOut(getTitlePrompt());
 		while (sc.hasNextLine()){
 			String userCmd = sc.next();
 			if (QUIT.equalsIgnoreCase(userCmd.trim())) {
 				break;
 			}
-			System.out.println("Executing ... " + userCmd);
+			sysOutln("Executing ... " + userCmd);
 
 			try {
 				CallableExpression ce = session.parse(userCmd);
 				Result result = ce.doIt();
-				System.out.println(result.textValue());
+				sysOutln(result.textValue());
 			} catch (Throwable t) {
-				System.out.println("ERROR: " + t.getMessage());
+				sysOutln("ERROR: " + t.getMessage());
 				//t.printStackTrace();
-				System.out.println("\n" + getHelpMessage());
+				sysOutln("\n" + getHelpMessage());
 			}
 
-			System.out.print(getTitlePrompt());
+			sysOut(getTitlePrompt());
 		}
-		System.out.println("Bye!");
+		sysOutln("Bye!");
 	}
 
-	private static String getTitlePrompt() {
-		String userAt = System.getenv("USERNAME") + "@DoIt$ ";
+	private void sysOut(final String out) {
+		System.out.print(out);
+	}
+
+	private void sysOutln(final String out) {
+		System.out.println(out);
+	}
+
+	private DoItSession createDoItSession() {
+		try {
+			return new DoIt().createSession(true);
+		} catch(Throwable t) {
+			t.printStackTrace();
+			try {
+				return new DoIt().createSession();
+			} catch (Throwable t2) {
+				t2.printStackTrace();
+				throw new RuntimeException(t2.getMessage(), t2);
+			}
+		}
+	}
+
+	private String getTitlePrompt() {
+		if (userAt == null) {
+			userAt = System.getenv("USERNAME") + "@DoIt$ ";
+		}
 		return userAt;
 	}
 
-	private static String getHelpMessage() {
+	private String getHelpMessage() {
 		return "Type '" + QUIT + "' to exit from here!";
 	}
 
