@@ -13,7 +13,7 @@ import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 
 /**
  * Validate and load an {@link ExprPackDescriptor} from an {@link ExpressionPack}.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public abstract class PackLoader {
 

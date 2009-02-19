@@ -14,7 +14,7 @@ import org.oneupfordev.doit.stuff.DoItMock;
 import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class ExpressionTest {
 

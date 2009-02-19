@@ -12,7 +12,7 @@ import org.oneupfordev.doit.CallableExpression;
 
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class Word {
 

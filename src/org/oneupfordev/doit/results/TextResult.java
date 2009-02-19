@@ -6,7 +6,7 @@ package org.oneupfordev.doit.results;
 
 /**
  * Simple Text Result.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class TextResult implements Result {
 

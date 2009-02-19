@@ -4,7 +4,7 @@
 package org.oneupfordev.doit.parsers.expr;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 class Argument {
 

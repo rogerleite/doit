@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * It is the main point to get or receive new Expressions.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public interface ExpressionPack {
 

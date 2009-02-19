@@ -12,7 +12,7 @@ import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Console Application to run {@link CallableExpression}s.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class ConsoleApp {
 

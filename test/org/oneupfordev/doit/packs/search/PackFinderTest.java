@@ -12,7 +12,7 @@ import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.packs.search.PackFinder;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class PackFinderTest {
 

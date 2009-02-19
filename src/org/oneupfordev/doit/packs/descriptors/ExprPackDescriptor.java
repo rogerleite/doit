@@ -11,7 +11,7 @@ import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.packs.PackLoader;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class ExprPackDescriptor {
 

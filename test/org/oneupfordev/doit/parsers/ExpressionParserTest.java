@@ -17,7 +17,7 @@ import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 /**
  * Tests of Expression Parser.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class ExpressionParserTest {
 

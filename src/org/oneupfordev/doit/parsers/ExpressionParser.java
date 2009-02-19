@@ -18,7 +18,7 @@ import org.oneupfordev.doit.stuff.Context;
 import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class ExpressionParser {
 	private Context context = null;

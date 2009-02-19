@@ -26,7 +26,7 @@ import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutInnerCmds2;
 
 /**
  * Test for loading and validating ExpressionPacks.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class PackLoaderByAnnotationTest {
 

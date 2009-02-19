@@ -13,7 +13,7 @@ import org.oneupfordev.doit.ExpressionPack;
 /**
  * <p>{@link ClassLoader} that can add Jar files into classpath at runtime.<br>
  * This is class is based on this version (http://snippets.dzone.com/posts/show/3574), available at net.</p>
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class JarFileLoader extends URLClassLoader {
 

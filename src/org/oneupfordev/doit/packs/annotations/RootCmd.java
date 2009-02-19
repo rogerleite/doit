@@ -15,7 +15,7 @@ import org.oneupfordev.doit.CallableExpression;
  * <p>Describes the available commands of an {@link CallableExpression},
  * and for each command you can describe it's "inner" commands too.</p>
  * TODO: Put an example of code with these annotations.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

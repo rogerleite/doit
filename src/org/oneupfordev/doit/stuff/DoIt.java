@@ -7,7 +7,7 @@ package org.oneupfordev.doit.stuff;
 
 /**
  * It is the object responsible for creating new {@link DoItSession}s.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class DoIt {
 

@@ -14,7 +14,7 @@ import java.util.jar.Manifest;
 import org.oneupfordev.doit.ExpressionPack;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class FolderPack {
 

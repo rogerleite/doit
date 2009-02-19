@@ -13,7 +13,7 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
 /**
  * Responsible for managing Descriptors.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class Dictionary {
 

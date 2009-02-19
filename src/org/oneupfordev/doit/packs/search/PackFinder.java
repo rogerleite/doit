@@ -12,7 +12,7 @@ import java.util.List;
 import org.oneupfordev.doit.ExpressionPack;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class PackFinder {
 

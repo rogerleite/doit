@@ -13,7 +13,7 @@ import org.oneupfordev.doit.results.TextResult;
 
 /**
  * Support command for DoIt {@link org.oneupfordev.doit.stuff.Context} actions.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 @RootCmd(cmds={"show", "add"})
 @Cmd(name="add", innerCmds={"value"})

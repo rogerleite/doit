@@ -11,7 +11,7 @@ import org.oneupfordev.doit.CallableExpression;
 
 /**
  * Shared Object between {@link CallableExpression}s.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class Context {
 

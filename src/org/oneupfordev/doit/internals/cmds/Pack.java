@@ -14,7 +14,7 @@ import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
  * Support command for DoIt {@link Dictionary} actions.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 @RootCmd(cmds={"show"})
 class Pack implements CallableExpression {

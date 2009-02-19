@@ -14,7 +14,7 @@ import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
 
 /**
  * Describe commands of Expression.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class RootCmdDescriptor extends CmdDescriptor {
 

@@ -10,7 +10,7 @@ import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 
 /**
  * Tests for {@link DoIt}.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class DoItTest {
 

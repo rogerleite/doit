@@ -11,7 +11,7 @@ import org.oneupfordev.doit.ExpressionPack;
 
 /**
  * Expression Pack of "support" commands of DoIt.
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class InternalExpressionPack implements ExpressionPack {
 

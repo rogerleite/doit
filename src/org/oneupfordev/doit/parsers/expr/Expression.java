@@ -10,7 +10,7 @@ import java.util.List;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
 /**
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class Expression {
 

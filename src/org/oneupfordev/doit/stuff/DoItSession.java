@@ -10,6 +10,7 @@ import org.oneupfordev.doit.ExpressionPack;
 import org.oneupfordev.doit.internals.cmds.InternalExpressionPack;
 import org.oneupfordev.doit.packs.PackLoader;
 import org.oneupfordev.doit.packs.PackLoaderByAnnotation;
+import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.search.FolderPack;
 import org.oneupfordev.doit.packs.search.PackFinder;
 import org.oneupfordev.doit.parsers.ExpressionParser;
@@ -23,7 +24,7 @@ import org.oneupfordev.doit.parsers.ExpressionParser;
  * <li>load new {@link ExpressionPack}s of your application.</li>
  * </ul>
  * </p>
- * @author <a href="roger.leite@1up4dev.org">Roger Leite</a>
+ * @author Roger Leite
  */
 public class DoItSession {
 
@@ -59,7 +60,8 @@ public class DoItSession {
 	public void load(ExpressionPack expressionPack) {
 		//TODO document all possible exceptions can occurs.
 		PackLoader packLoader = new PackLoaderByAnnotation();
-		dictionary.add(packLoader.load(expressionPack));
+		ExprPackDescriptor exprPackDescriptor = packLoader.load(expressionPack);
+		dictionary.add(exprPackDescriptor);
 	}
 
 	public CallableExpression parse(final String expression) {
