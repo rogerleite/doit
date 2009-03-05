@@ -15,35 +15,41 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  * Validate and "compile" an expression, in a list of {@link CallableWord}s.
  * @author Roger Leite
  */
-class WordWalker {
+class ExpressionReader {
 
 	private final String expression;
 	private final RootCmdDescriptor rootCmd;
-	private List<CallableWord> words = null;
 
-	public WordWalker(final String expression, final RootCmdDescriptor rootCmd) {
+	private List<CallableWord> words = null;
+	private String assign = null;
+
+	public ExpressionReader(final String expression, final RootCmdDescriptor rootCmd) {
 		this.expression = expression;
 		this.rootCmd = rootCmd;
 	}
 
-	public WordWalker parse() {
+	public void read() {
 		if (words == null) {
 			words = new ArrayList<CallableWord>();
 			CmdDescriptor castOfRootCmd = (CmdDescriptor) rootCmd;
-			populateWords(0, Arrays.asList(castOfRootCmd));
+			ParserPointer parserPointer = new ParserPointer(this.expression);
+			populateWords(parserPointer, Arrays.asList(castOfRootCmd));
 		}
-		return this;
 	}
 
 	public List<CallableWord> getWords() {
 		if (words == null) {
-			throw new RuntimeException("Method parse not called.");
+			throw new RuntimeException("Method read not called.");
 		}
 		return words;
 	}
 
-	private void populateWords(int expressionIndex, List<CmdDescriptor> possibleCmds) {
-		String word = extractWord(expressionIndex);
+	public String getAssign() {
+		return this.assign;
+	}
+
+	private void populateWords(final ParserPointer parserPointer, final List<CmdDescriptor> possibleCmds) {
+		String word = parserPointer.readWord();
 		if (word == null) {
 			throw new RuntimeException("Command not found.");		//TODO create a InvalidExpressionException and replace this
 		}
@@ -52,29 +58,22 @@ class WordWalker {
 			String msg = String.format("Don't know what you mean by %s.", word);
 			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
 		}
-		expressionIndex += word.length();
-		word = word.trim();
 
 		CmdDescriptor selectCmdDescr = possibleCmds.get(indexOfCmdDescriptor);
-		String argument = extractArgument(expressionIndex);
+		String argument = parserPointer.readArgument();
 		if (selectCmdDescr.getArgumentType() == ArgumentType.NO_ACCEPT && argument != null) {
-			String msg = String.format("Invalid parameter at index %d.", expressionIndex);
+			String msg = String.format("Invalid parameter at index %d.", parserPointer.getCurrentIndex());
 			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
 		} else if (selectCmdDescr.getArgumentType() == ArgumentType.REQUIRED && argument == null) {
-			String msg = String.format("Required parameter at index %d.", expressionIndex);
+			String msg = String.format("Required parameter at index %d.", parserPointer.getCurrentIndex());
 			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
-		}
-		if (argument != null) {
-			expressionIndex += argument.length();
-			argument = argument.trim();
 		}
 
 		words.add(new CallableWord(word, argument));
 		if (!selectCmdDescr.getInnerCmds().isEmpty()) {
-			populateWords(expressionIndex, selectCmdDescr.getInnerCmds());
+			populateWords(parserPointer, selectCmdDescr.getInnerCmds());
 		} else {
-			//end of expression
-			//TODO check for assign
+			assign = parserPointer.readAssign();
 		}
 
 	}
@@ -91,14 +90,6 @@ class WordWalker {
 			}
 		}
 		return -1;
-	}
-
-	private String extractArgument(int expressionIndex) {
-		return null;
-	}
-
-	private String extractWord(int expressionIndex) {
-		return null;
 	}
 
 }

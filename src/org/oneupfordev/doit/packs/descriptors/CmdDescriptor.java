@@ -165,8 +165,7 @@ public class CmdDescriptor {
 
 			return true;
 		} else if (obj instanceof String) {
-			String objString = obj.toString().trim();
-			if (!this.name.equalsIgnoreCase(objString)) {
+			if (!this.name.equalsIgnoreCase(obj.toString())) {
 				return false;
 			}
 			return true;

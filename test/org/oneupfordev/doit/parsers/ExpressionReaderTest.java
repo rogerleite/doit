@@ -12,10 +12,10 @@ import org.oneupfordev.doit.stuff.DoItMock;
 import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 /**
- * Tests of {@link WordWalker}.
+ * Tests of {@link ExpressionReader}.
  * @author Roger Leite
  */
-public class WordWalkerTest {
+public class ExpressionReaderTest {
 
 	private DoItSessionMock getValidDoItSessionMock() {
 		DoItMock doItMock = new DoItMock();
@@ -33,8 +33,8 @@ public class WordWalkerTest {
 		DoItSessionMock validSession = getValidDoItSessionMock();
 		RootCmdDescriptor rootCmd = validSession.getDictionary().find(expression);
 
-		WordWalker ww = new WordWalker(expression, rootCmd);
-		ww.parse();
+		ExpressionReader ww = new ExpressionReader(expression, rootCmd);
+		ww.read();
 		assertEquals(3, ww.getWords().size());
 	}
 
