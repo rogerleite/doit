@@ -13,7 +13,7 @@ import org.junit.Test;
 public class ParserPointerTest {
 
 	@Test
-	public void readWord() {
+	public void pointerShouldReadWords() {
 		ParserPointer pp = new ParserPointer("   bah   x");
 		assertWord(pp, "bah", 9, false);
 
@@ -35,6 +35,9 @@ public class ParserPointerTest {
 		pp = new ParserPointer("bah ");
 		pp.readWord();
 		assertWord(pp, null, 4, true);
+
+		pp = new ParserPointer("");
+		assertWord(pp, null, 0, true);
 	}
 
 	private void assertWord(ParserPointer pp, String expectedWord, int expectedIndex, boolean expectedEOE) {

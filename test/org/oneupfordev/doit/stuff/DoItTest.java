@@ -15,7 +15,7 @@ import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 public class DoItTest {
 
 	@Test
-	public void create_session_should_contain_context_and_dictionary_valids() {
+	public void createSessionShouldContainContextAndDictionaryValids() {
 		DoItSession session = new DoIt().createSession();
 		assertEquals("Context contais pack path attribute.",
 				session.context.getAttribute(Context.PACKPATH_KEY), "packs");

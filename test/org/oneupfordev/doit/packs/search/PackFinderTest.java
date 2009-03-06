@@ -24,14 +24,14 @@ public class PackFinderTest {
 	}
 
 	@Test
-	public void should_find_one_pack() {
+	public void shouldFindOnePack() {
 		PackFinder pf = new PackFinder();
 		List<FolderPack> packs = pf.lookForPacks(getRootPath() + "testPackFinder");
 		assertEquals(1, packs.size());
 	}
 
 	@Test
-	public void should_instantiate_one_pack() {
+	public void shouldInstantiateOnePack() {
 		PackFinder pf = new PackFinder();
 		List<FolderPack> packs = pf.lookForPacks(getRootPath() + "testPackFinder");
 		List<ExpressionPack> exprPacks = pf.instantiatePacks(packs);

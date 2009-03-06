@@ -29,7 +29,7 @@ public class ExpressionTest {
 	}
 
 	@Test
-	public void should_parse_arguments() {
+	public void shouldParseArguments() {
 		Dictionary dic = getDictionary();
 		RootCmdDescriptor cmd = dic.find("cmd");
 
