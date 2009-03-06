@@ -5,6 +5,7 @@ package org.oneupfordev.doit.packs.descriptors;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.vidageek.mirror.ClassController;
@@ -31,6 +32,10 @@ public class CmdDescriptor {
 
 	public CmdDescriptor getInnerCmd(int index) {
 		return innerCmds.get(index);
+	}
+
+	public List<CmdDescriptor> getInnerCmds() {
+		return Collections.unmodifiableList(innerCmds);
 	}
 
 	protected void setName(String name) {
@@ -139,25 +144,34 @@ public class CmdDescriptor {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof CmdDescriptor))
-			return false;
-		CmdDescriptor other = (CmdDescriptor) obj;
-		if (argumentType == null) {
-			if (other.argumentType != null)
+
+		if (obj instanceof CmdDescriptor) {
+			CmdDescriptor other = (CmdDescriptor) obj;
+			if (argumentType == null) {
+				if (other.argumentType != null)
+					return false;
+			} else if (!argumentType.equals(other.argumentType))
 				return false;
-		} else if (!argumentType.equals(other.argumentType))
-			return false;
-		if (innerCmds == null) {
-			if (other.innerCmds != null)
+			if (innerCmds == null) {
+				if (other.innerCmds != null)
+					return false;
+			} else if (!innerCmds.equals(other.innerCmds))
 				return false;
-		} else if (!innerCmds.equals(other.innerCmds))
-			return false;
-		if (name == null) {
-			if (other.name != null)
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
 				return false;
-		} else if (!name.equals(other.name))
+
+			return true;
+		} else if (obj instanceof String) {
+			if (!this.name.equalsIgnoreCase(obj.toString())) {
+				return false;
+			}
+			return true;
+		} else {
 			return false;
-		return true;
+		}
 	}
 
 }
