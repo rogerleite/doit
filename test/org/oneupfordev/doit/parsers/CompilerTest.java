@@ -12,10 +12,10 @@ import org.oneupfordev.doit.stuff.DoItMock;
 import org.oneupfordev.doit.stuff.DoItSessionMock;
 
 /**
- * Tests of {@link ExpressionReader}.
+ * Tests of {@link Compiler}.
  * @author Roger Leite
  */
-public class ExpressionReaderTest {
+public class CompilerTest {
 
 	private DoItSessionMock getValidDoItSessionMock() {
 		DoItMock doItMock = new DoItMock();
@@ -28,14 +28,35 @@ public class ExpressionReaderTest {
 	}
 
 	@Test
-	public void parseValidExpressions() {
+	public void parseValidExpressionsWithoutArgs() {
 		String expression = "ExpressionValid test testinner";
 		DoItSessionMock validSession = getValidDoItSessionMock();
 		RootCmdDescriptor rootCmd = validSession.getDictionary().find(expression);
 
-		ExpressionReader ww = new ExpressionReader(expression, rootCmd);
-		ww.read();
+		Compiler ww = new Compiler(expression, rootCmd);
+		ww.compile();
 		assertEquals(3, ww.getWords().size());
+	}
+
+	@Test
+	public void parseValidExpressionsWithArgs() {
+		String expression = "ExpressionValid 'test' test testinner";
+		DoItSessionMock validSession = getValidDoItSessionMock();
+		RootCmdDescriptor rootCmd = validSession.getDictionary().find(expression);
+
+		Compiler ww = new Compiler(expression, rootCmd);
+		ww.compile();
+		assertEquals(3, ww.getWords().size());
+		assertEquals("'test'", ww.getWords().get(0).argument);
+
+		expression = "ExpressionValid 'test' test testinner 'testinner with space'";
+		rootCmd = validSession.getDictionary().find(expression);
+
+		ww = new Compiler(expression, rootCmd);
+		ww.compile();
+		assertEquals(3, ww.getWords().size());
+		assertEquals("'test'", ww.getWords().get(0).argument);
+		assertEquals("'testinner with space'", ww.getWords().get(2).argument);
 	}
 
 }

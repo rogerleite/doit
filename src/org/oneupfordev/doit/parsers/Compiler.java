@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.oneupfordev.doit.exceptions.InvalidExpressionException;
+import org.oneupfordev.doit.exceptions.ParseExpressionException;
 import org.oneupfordev.doit.packs.descriptors.ArgumentType;
 import org.oneupfordev.doit.packs.descriptors.CmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
@@ -15,7 +17,7 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  * Validate and "compile" an expression, in a list of {@link CallableWord}s.
  * @author Roger Leite
  */
-class ExpressionReader {
+class Compiler {
 
 	private final String expression;
 	private final RootCmdDescriptor rootCmd;
@@ -23,17 +25,23 @@ class ExpressionReader {
 	private List<CallableWord> words = null;
 	private String assign = null;
 
-	public ExpressionReader(final String expression, final RootCmdDescriptor rootCmd) {
+	public Compiler(final String expression, final RootCmdDescriptor rootCmd) {
 		this.expression = expression;
 		this.rootCmd = rootCmd;
 	}
 
-	public void read() {
+	public void compile() throws InvalidExpressionException {
 		if (words == null) {
 			words = new ArrayList<CallableWord>();
+			CompilerPointer compilerPointer = new CompilerPointer(this.expression);
 			CmdDescriptor castOfRootCmd = (CmdDescriptor) rootCmd;
-			ParserPointer parserPointer = new ParserPointer(this.expression);
-			populateWords(parserPointer, Arrays.asList(castOfRootCmd));
+
+			try {
+				populateWords(compilerPointer, Arrays.asList(castOfRootCmd));
+			} catch (ParseExpressionException e) {
+				String msg = String.format("Invalid syntax at index %d.\n" + e.getMessage(), e.getErrorOffset());
+				throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg, e);
+			}
 		}
 	}
 
@@ -48,32 +56,35 @@ class ExpressionReader {
 		return this.assign;
 	}
 
-	private void populateWords(final ParserPointer parserPointer, final List<CmdDescriptor> possibleCmds) {
-		String word = parserPointer.readWord();
+	private void populateWords(final CompilerPointer compilerPointer,
+			final List<CmdDescriptor> possibleCmds)
+			throws ParseExpressionException, InvalidExpressionException {
+
+		String word = compilerPointer.readWord();
 		if (word == null) {
-			throw new RuntimeException("Command not found.");		//TODO create a InvalidExpressionException and replace this
+			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), "Command not found.");
 		}
 		int indexOfCmdDescriptor = indexOf(possibleCmds, word);
 		if (indexOfCmdDescriptor < 0) {
 			String msg = String.format("Don't know what you mean by %s.", word);
-			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
+			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
 		}
 
 		CmdDescriptor selectCmdDescr = possibleCmds.get(indexOfCmdDescriptor);
-		String argument = parserPointer.readArgument();
+		String argument = compilerPointer.readArgument();
 		if (selectCmdDescr.getArgumentType() == ArgumentType.NO_ACCEPT && argument != null) {
-			String msg = String.format("Invalid parameter at index %d.", parserPointer.getCurrentIndex());
-			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
+			String msg = String.format("Invalid parameter at index %d.", compilerPointer.getCurrentIndex());
+			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
 		} else if (selectCmdDescr.getArgumentType() == ArgumentType.REQUIRED && argument == null) {
-			String msg = String.format("Required parameter at index %d.", parserPointer.getCurrentIndex());
-			throw new RuntimeException(msg);		//TODO create a InvalidExpressionException and replace this
+			String msg = String.format("Required parameter at index %d.", compilerPointer.getCurrentIndex());
+			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
 		}
 
 		words.add(new CallableWord(word, argument));
 		if (!selectCmdDescr.getInnerCmds().isEmpty()) {
-			populateWords(parserPointer, selectCmdDescr.getInnerCmds());
+			populateWords(compilerPointer, selectCmdDescr.getInnerCmds());
 		} else {
-			assign = parserPointer.readAssign();
+			assign = compilerPointer.readAssign();
 		}
 
 	}

@@ -8,8 +8,12 @@ package org.oneupfordev.doit.parsers;
  */
 class CallableWord {
 
-	public CallableWord(String word, String argument) {
-		// TODO Auto-generated constructor stub
+	String word = null;
+	String argument = null;
+
+	public CallableWord(final String word, final String argument) {
+		this.word = word;
+		this.argument = argument;
 	}
 
 }

@@ -3,11 +3,13 @@
  */
 package org.oneupfordev.doit.parsers;
 
+import org.oneupfordev.doit.exceptions.ParseExpressionException;
+
 
 /**
  * @author Roger Leite
  */
-class ParserPointer {
+class CompilerPointer {
 
 	private final String expression;
 	private final char[] charExpression;
@@ -51,7 +53,7 @@ class ParserPointer {
 	/**
 	 * @param expression to read words, argument and assign.
 	 */
-	public ParserPointer(final String expression) {
+	public CompilerPointer(final String expression) {
 		this.expression = expression;
 		this.charExpression = expression.toCharArray();
 		this.currentIndex = 0;
@@ -88,11 +90,26 @@ class ParserPointer {
 		return word;
 	}
 
-	public String readArgument() {
-		return null;
+	public String readArgument() throws ParseExpressionException {
+		int endIndex = expressionIterator.iterate(currentIndex, iterateWhiteSpaces);
+		if (isEOE() || charExpression[endIndex] != '\'') {
+			return null;
+		}
+		endIndex++;
+		int possibleEndIndex = expression.indexOf("'", endIndex);
+		if (possibleEndIndex < 0) {
+			throw new ParseExpressionException("Closing character argument \"'\" not found!) ", endIndex);
+		}
+		endIndex = expressionIterator.iterate(possibleEndIndex + 1, iterateWhiteSpaces);
+		String arg = expression.substring(currentIndex, endIndex);
+		arg = arg.trim();
+
+		setCurrentIndex(endIndex);
+		return arg;
 	}
 
 	public String readAssign() {
+		//TODO implement this
 		return null;
 	}
 
