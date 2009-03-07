@@ -47,7 +47,7 @@ public class CompilerTest {
 		Compiler ww = new Compiler(expression, rootCmd);
 		ww.compile();
 		assertEquals(3, ww.getWords().size());
-		assertEquals("'test'", ww.getWords().get(0).argument);
+		assertEquals("test", ww.getWords().get(0).argument);
 
 		expression = "ExpressionValid 'test' test testinner 'testinner with space'";
 		rootCmd = validSession.getDictionary().find(expression);
@@ -55,8 +55,8 @@ public class CompilerTest {
 		ww = new Compiler(expression, rootCmd);
 		ww.compile();
 		assertEquals(3, ww.getWords().size());
-		assertEquals("'test'", ww.getWords().get(0).argument);
-		assertEquals("'testinner with space'", ww.getWords().get(2).argument);
+		assertEquals("test", ww.getWords().get(0).argument);
+		assertEquals("testinner with space", ww.getWords().get(2).argument);
 	}
 
 }

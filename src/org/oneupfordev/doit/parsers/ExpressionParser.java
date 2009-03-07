@@ -4,6 +4,7 @@
 package org.oneupfordev.doit.parsers;
 
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
 
 import net.vidageek.mirror.ClassController;
@@ -11,6 +12,7 @@ import net.vidageek.mirror.Mirror;
 import net.vidageek.mirror.ObjectController;
 
 import org.oneupfordev.doit.CallableExpression;
+import org.oneupfordev.doit.exceptions.InvalidExpressionException;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.parsers.expr.Expression;
 import org.oneupfordev.doit.parsers.expr.Word;
@@ -29,16 +31,31 @@ public class ExpressionParser {
 		this.dictionary = dictionary;
 	}
 
-	public CallableExpression parse(String expression) {
+	public CallableExpression parse(final String expression) throws InvalidExpressionException {
 		RootCmdDescriptor rootCmdDescr = dictionary.find(expression);
 		if (rootCmdDescr == null) {
-			throw new RuntimeException("Command not found!");
+			throw new InvalidExpressionException(expression, 0, "Unknow expression.");
 		}
+
+		/*Compiler compiler = new Compiler(expression, rootCmdDescr);
+		compiler.compile();
+
+		List<CallableWord> words = compiler.getWords();
+
+		ClassController<?> callableController = Mirror.on(rootCmdDescr.getClassExpression());
+		CallableExpression callable = createInstance(callableController, words.get(0));
+		injectStuff(callableController, callable);
+		
+		for (int i = 1; i < words.size(); i++) {
+			CallableWord word = words.get(i);
+			
+		}*/
 
 		Expression expr = new Expression(expression, rootCmdDescr);
 
 		CallableExpression callable = findCommand(expr, rootCmdDescr);
-		callable = injectStuff(callable, expr);
+		ClassController<?> callableController = Mirror.on(rootCmdDescr.getClassExpression());
+		injectStuff(callableController, callable);
 
 		int wordIndex = 1;
 		//TODO: find a better way than this
@@ -70,21 +87,14 @@ public class ExpressionParser {
 		return callable;
 	}
 
-	private CallableExpression injectStuff(final CallableExpression callable, final Expression statement) {
+	private void injectStuff(final ClassController<?> callableController, final CallableExpression callable) {
 
 		callable.setContext(context);
-
-		ClassController<?> callableController = Mirror.on(callable.getClass());
-		/*Field rightSideField = callableController.reflect().field("rightSide");
-		if (rightSideField != null) {
-			Mirror.on(callable).set().field(rightSideField).withValue(statement.getRightSide());
-		}*/
 		Field dictionaryField = callableController.reflect().field("dictionary");
 		if (dictionaryField != null) {
 			Mirror.on(callable).set().field(dictionaryField).withValue(dictionary);
 		}
 
-		return callable;
 	}
 
 	private CallableExpression keepWalking(CallableExpression callable,

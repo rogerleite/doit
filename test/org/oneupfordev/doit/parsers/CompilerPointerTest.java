@@ -100,8 +100,57 @@ public class CompilerPointerTest {
 		}
 	}
 
-	private void assertArgument(CompilerPointer pp, String expectedWord, int expectedIndex, boolean expectedEOE) throws ParseExpressionException {
-		String word = pp.readArgument();
+	private void assertArgument(CompilerPointer pp, String expectedArg, int expectedIndex, boolean expectedEOE) throws ParseExpressionException {
+		String arg = pp.readArgument();
+		assertEquals(expectedArg, arg);
+		assertEquals("Current index at " + expectedIndex, expectedIndex, pp.getCurrentIndex());
+		assertEquals(expectedEOE, pp.isEOE());
+	}
+
+	@Test
+	public void pointerShouldReadAssign() throws ParseExpressionException {
+		CompilerPointer pp = new CompilerPointer("bah 'test' : test assign ");
+		pp.readWord();
+		pp.readArgument();
+		assertAssign(pp, " test assign ", 25, true);
+
+		pp = new CompilerPointer("bah 'test': test assign ");
+		pp.readWord();
+		pp.readArgument();
+		assertAssign(pp, " test assign ", 24, true);
+
+		pp = new CompilerPointer("bah :\t\nthis is a test with longer assign! Here i can use any character: tab, return, :, '");
+		pp.readWord();
+		assertAssign(pp, "\t\nthis is a test with longer assign! Here i can use any character: tab, return, :, '", 89, true);
+	}
+
+	@Test
+	public void pointerShouldReadAssignAndReturnNullOrException() throws ParseExpressionException {
+		CompilerPointer pp = new CompilerPointer("bah :");
+		pp.readWord();
+		assertAssign(pp, null, 5, true);
+
+		pp = new CompilerPointer("bah ");
+		pp.readWord();
+		assertAssign(pp, null, 4, true);
+
+		pp = new CompilerPointer("   bah   ");
+		pp.readWord();
+		assertAssign(pp, null, 9, true);
+
+		try {
+			CompilerPointer ppEx = new CompilerPointer("validcmd 'validarg' invalidcmd :");
+			ppEx.readWord();
+			ppEx.readArgument();
+			ppEx.readAssign();
+			fail("ExpressionParseException should be thrown.");
+		} catch (ParseExpressionException e) {
+			assertEquals("Exception have to be at index 20", 20, e.getErrorOffset());
+		}
+	}
+
+	private void assertAssign(CompilerPointer pp, String expectedWord, int expectedIndex, boolean expectedEOE) throws ParseExpressionException {
+		String word = pp.readAssign();
 		assertEquals(expectedWord, word);
 		assertEquals("Current index at " + expectedIndex, expectedIndex, pp.getCurrentIndex());
 		assertEquals(expectedEOE, pp.isEOE());

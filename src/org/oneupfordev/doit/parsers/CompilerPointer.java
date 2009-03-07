@@ -11,6 +11,9 @@ import org.oneupfordev.doit.exceptions.ParseExpressionException;
  */
 class CompilerPointer {
 
+	private static final char ARGUMENT_CHAR = '\'';
+	private static final char ASSIGN_CHAR = ':';
+
 	private final String expression;
 	private final char[] charExpression;
 
@@ -92,13 +95,14 @@ class CompilerPointer {
 
 	public String readArgument() throws ParseExpressionException {
 		int endIndex = expressionIterator.iterate(currentIndex, iterateWhiteSpaces);
-		if (isEOE() || charExpression[endIndex] != '\'') {
+		if (isEOE() || charExpression[endIndex] != ARGUMENT_CHAR) {
 			return null;
 		}
 		endIndex++;
-		int possibleEndIndex = expression.indexOf("'", endIndex);
+		int possibleEndIndex = expression.indexOf(ARGUMENT_CHAR, endIndex);
 		if (possibleEndIndex < 0) {
-			throw new ParseExpressionException("Closing character argument \"'\" not found!) ", endIndex);
+			String msg = String.format("Closing character argument \"%s\" not found!", ARGUMENT_CHAR);
+			throw new ParseExpressionException(msg, endIndex);
 		}
 		endIndex = expressionIterator.iterate(possibleEndIndex + 1, iterateWhiteSpaces);
 		String arg = expression.substring(currentIndex, endIndex);
@@ -108,9 +112,23 @@ class CompilerPointer {
 		return arg;
 	}
 
-	public String readAssign() {
-		//TODO implement this
-		return null;
+	public String readAssign() throws ParseExpressionException {
+		if (isEOE()) {
+			return null;
+		}
+		int endIndex = getCurrentIndex();
+		if (charExpression[endIndex] != ASSIGN_CHAR) {
+			String msg = String.format("Expected assign char \"%s\" at index %d.", ASSIGN_CHAR, endIndex);
+			throw new ParseExpressionException(msg, endIndex);
+		}
+		endIndex++;
+		String assign = expression.substring(endIndex, size);
+		if ("".equals(assign)) {
+			assign = null;
+		}
+
+		setCurrentIndex(size);
+		return assign;
 	}
 
 }

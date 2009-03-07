@@ -30,6 +30,12 @@ class Compiler {
 		this.rootCmd = rootCmd;
 	}
 
+	/**
+	 * <p>Do some validation, syntax and logic, in the expression,
+	 * and build a list of {@link CallableWord}s.</p>
+	 * TODO: put here example of validations. For now, you can see at CompilerTest, in sources.
+	 * @throws InvalidExpressionException any logic or syntax problem during compilation.
+	 */
 	public void compile() throws InvalidExpressionException {
 		if (words == null) {
 			words = new ArrayList<CallableWord>();
@@ -37,7 +43,7 @@ class Compiler {
 			CmdDescriptor castOfRootCmd = (CmdDescriptor) rootCmd;
 
 			try {
-				populateWords(compilerPointer, Arrays.asList(castOfRootCmd));
+				extractWords(compilerPointer, Arrays.asList(castOfRootCmd));
 			} catch (ParseExpressionException e) {
 				String msg = String.format("Invalid syntax at index %d.\n" + e.getMessage(), e.getErrorOffset());
 				throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg, e);
@@ -56,7 +62,7 @@ class Compiler {
 		return this.assign;
 	}
 
-	private void populateWords(final CompilerPointer compilerPointer,
+	private void extractWords(final CompilerPointer compilerPointer,
 			final List<CmdDescriptor> possibleCmds)
 			throws ParseExpressionException, InvalidExpressionException {
 
@@ -82,7 +88,7 @@ class Compiler {
 
 		words.add(new CallableWord(word, argument));
 		if (!selectCmdDescr.getInnerCmds().isEmpty()) {
-			populateWords(compilerPointer, selectCmdDescr.getInnerCmds());
+			extractWords(compilerPointer, selectCmdDescr.getInnerCmds());
 		} else {
 			assign = compilerPointer.readAssign();
 		}
