@@ -4,7 +4,7 @@
 package org.oneupfordev.doit.parsers;
 
 import java.lang.reflect.Field;
-import java.util.Iterator;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import net.vidageek.mirror.ClassController;
@@ -14,8 +14,6 @@ import net.vidageek.mirror.ObjectController;
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.exceptions.InvalidExpressionException;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
-import org.oneupfordev.doit.parsers.expr.Expression;
-import org.oneupfordev.doit.parsers.expr.Word;
 import org.oneupfordev.doit.stuff.Context;
 import org.oneupfordev.doit.stuff.Dictionary;
 
@@ -37,57 +35,52 @@ public class ExpressionParser {
 			throw new InvalidExpressionException(expression, 0, "Unknow expression.");
 		}
 
-		/*Compiler compiler = new Compiler(expression, rootCmdDescr);
+		Compiler compiler = new Compiler(expression, rootCmdDescr);
 		compiler.compile();
 
 		List<CallableWord> words = compiler.getWords();
 
-		ClassController<?> callableController = Mirror.on(rootCmdDescr.getClassExpression());
+		ClassController<? extends CallableExpression> callableController = Mirror.on(rootCmdDescr.getClassExpression());
 		CallableExpression callable = createInstance(callableController, words.get(0));
-		injectStuff(callableController, callable);
-		
+		injectStuff(callableController, compiler, callable);
+
+		ObjectController objectController = Mirror.on(callable);
+
 		for (int i = 1; i < words.size(); i++) {
 			CallableWord word = words.get(i);
-			
-		}*/
+			Method methodToCall = findMethod(callableController, word);
+			Object resultFromInvoke = null;
+			if (word.getArgument() != null) {
+				resultFromInvoke = objectController.invoke().method(methodToCall).withArgs(word.getArgument());
+			} else {
+				resultFromInvoke = objectController.invoke().method(methodToCall).withoutArgs();
+			}
 
-		Expression expr = new Expression(expression, rootCmdDescr);
-
-		CallableExpression callable = findCommand(expr, rootCmdDescr);
-		ClassController<?> callableController = Mirror.on(rootCmdDescr.getClassExpression());
-		injectStuff(callableController, callable);
-
-		int wordIndex = 1;
-		//TODO: find a better way than this
-		if (expr.getWords().size() >= 2 && expr.getWord(1).isParameterType()) {
-			wordIndex = 2;
-		}
-		if (expr.getWords().size() > wordIndex) {
-			callable = keepWalking(callable, expr, wordIndex);
+			if (resultFromInvoke instanceof CallableExpression) {
+				callable = (CallableExpression) resultFromInvoke;	//attention on this!!!
+			}
 		}
 
 		return callable;
 	}
 
-	private CallableExpression findCommand(final Expression expr, final RootCmdDescriptor rootCmdDescr) {
+	private CallableExpression createInstance(
+			final ClassController<? extends CallableExpression> callableController,
+			final CallableWord callableWord) {
 
-		//TODO: validate first word of expr with rootCmdDescr getName
-		List<Word> words = expr.getWords();
-
-		ClassController<?> callableController = Mirror.on(rootCmdDescr.getClassExpression());
 		CallableExpression callable = null;
-
-		//TODO: validate if command can ACCEPT parameters
-		if (words.size() >= 2 && words.get(1).isParameterType() ) {
-			callable = (CallableExpression) callableController.invoke().constructor().withArgs(words.get(1).toString());
+		if (callableWord.getArgument() != null) {
+			callable = (CallableExpression) callableController.invoke().constructor().withArgs(callableWord.getArgument());
 		} else {
 			callable = (CallableExpression) callableController.invoke().constructor().withoutArgs();
 		}
-		
+
 		return callable;
 	}
 
-	private void injectStuff(final ClassController<?> callableController, final CallableExpression callable) {
+	private void injectStuff(final ClassController<?> callableController,
+							final Compiler compiler,
+							final CallableExpression callable) {
 
 		callable.setContext(context);
 		Field dictionaryField = callableController.reflect().field("dictionary");
@@ -95,41 +88,28 @@ public class ExpressionParser {
 			Mirror.on(callable).set().field(dictionaryField).withValue(dictionary);
 		}
 
+		if (compiler.getAssign() != null) {
+			callable.setAssign(compiler.getAssign());
+		}
 	}
 
-	private CallableExpression keepWalking(CallableExpression callable,
-											final Expression expr,
-											int wordIndex) {
-		int step = 1;
-		
-		Word actualWord = expr.getWord(wordIndex);
-		Word parameterWord = null;
-		int nextWordIndex = wordIndex + 1;
-		if (nextWordIndex < expr.getWords().size() && expr.getWord(nextWordIndex).isParameterType()) {
-			parameterWord = expr.getWord(wordIndex + 1);
-			step++;
-		}
+	private Method findMethod(final ClassController<? extends CallableExpression> classController,
+							final CallableWord callableWord) {
 
-		ObjectController callableController = Mirror.on(callable);
-		Object resultFromInvoke = null;
-		if (parameterWord != null) {
-			resultFromInvoke = callableController.invoke()
-				.method(actualWord.getAsMethod(callable, true)).withArgs(parameterWord.toString());
-		} else {
-			resultFromInvoke = callableController.invoke()
-				.method(actualWord.getAsMethod(callable, false)).withoutArgs();
-		}
+		boolean withArgs = callableWord.getArgument() != null;
+		String value = callableWord.getWord();
 
-		if (resultFromInvoke instanceof CallableExpression) {
-			//TODO: change this, to make the parameter final
-			callable = (CallableExpression) resultFromInvoke;
+		//TO THINK: make a "hash-cache" of methods by name?
+		for (Method m : classController.reflectAll().methods()) {
+			if (m.getName().equalsIgnoreCase(value)) {
+				if (!withArgs && m.getParameterTypes().length == 0) {
+					return m;
+				} else if (withArgs && m.getParameterTypes().length == 1) {
+					return m;
+				}
+			}
 		}
-
-		if (wordIndex + step >= expr.getWords().size()) {
-			return callable;
-		} else {
-			return keepWalking(callable, expr, wordIndex + step);
-		}
+		throw new InvalidExpressionException(null, -1, "Method '" + value + "' cannot be found.");
 	}
 
 }

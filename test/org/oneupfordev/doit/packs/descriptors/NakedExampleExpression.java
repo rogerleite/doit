@@ -9,10 +9,11 @@ public class NakedExampleExpression implements CallableExpression {
 
 	protected Dictionary dictionary = null;
 	protected Context context = null;
+	protected String assign = null;
 
 	public Result doIt() { return null; }
-	public String getAssign() { return null; }
-	public void setAssign(String assign) {}
+	public String getAssign() { return assign; }
+	public void setAssign(String assign) { this.assign = assign; }
 
 	public Context getContext() {
 		return context;

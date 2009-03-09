@@ -64,6 +64,15 @@ public class ExpressionParserTest {
 		ce = sessionMock.parse("expressionvalid 'arg_constructor' test testInner");
 		checkCallableExpression(ce, false, true, "arg_constructor", true, true,
 				false, null, false, null);
+
+		ce = sessionMock.parse("expressionvalid 'arg_constructor' test testInner2 'testInner2'");
+		checkCallableExpression(ce, false, true, "arg_constructor", true, false,
+				false, null, true, "testInner2");
+
+		ce = sessionMock.parse("expressionvalid 'arg_constructor' test testInner2 'testInner2 with char : like separator' : this is an assign.");
+		checkCallableExpression(ce, false, true, "arg_constructor", true, false,
+				false, null, true, "testInner2 with char : like separator");
+		assertEquals(" this is an assign.", ce.getAssign());
 	}
 
 	private void checkCallableExpression(CallableExpression ce,

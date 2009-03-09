@@ -7,6 +7,8 @@ import org.oneupfordev.doit.exceptions.ParseExpressionException;
 
 
 /**
+ * <p>Important part of {@link Compiler}, responsible to read Words, Argument and Assign of an expression.<br>
+ * Do some parse validations and contains the current index to continue reading.</p>
  * @author Roger Leite
  */
 class CompilerPointer {

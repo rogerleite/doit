@@ -68,7 +68,7 @@ class Compiler {
 
 		String word = compilerPointer.readWord();
 		if (word == null) {
-			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), "Command not found.");
+			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), "Unknow command.");
 		}
 		int indexOfCmdDescriptor = indexOf(possibleCmds, word);
 		if (indexOfCmdDescriptor < 0) {
@@ -76,21 +76,21 @@ class Compiler {
 			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
 		}
 
-		CmdDescriptor selectCmdDescr = possibleCmds.get(indexOfCmdDescriptor);
+		CmdDescriptor selectedCmdDescr = possibleCmds.get(indexOfCmdDescriptor);
 		String argument = compilerPointer.readArgument();
-		if (selectCmdDescr.getArgumentType() == ArgumentType.NO_ACCEPT && argument != null) {
+		if (selectedCmdDescr.getArgumentType() == ArgumentType.NO_ACCEPT && argument != null) {
 			String msg = String.format("Invalid parameter at index %d.", compilerPointer.getCurrentIndex());
 			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
-		} else if (selectCmdDescr.getArgumentType() == ArgumentType.REQUIRED && argument == null) {
+		} else if (selectedCmdDescr.getArgumentType() == ArgumentType.REQUIRED && argument == null) {
 			String msg = String.format("Required parameter at index %d.", compilerPointer.getCurrentIndex());
 			throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg);
 		}
 
 		words.add(new CallableWord(word, argument));
-		if (!selectCmdDescr.getInnerCmds().isEmpty()) {
-			extractWords(compilerPointer, selectCmdDescr.getInnerCmds());
-		} else {
+		if (compilerPointer.isEOE() || selectedCmdDescr.getInnerCmds().isEmpty()) {
 			assign = compilerPointer.readAssign();
+		} else {
+			extractWords(compilerPointer, selectedCmdDescr.getInnerCmds());
 		}
 
 	}
