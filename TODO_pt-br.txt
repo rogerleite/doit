@@ -1,0 +1,6 @@
+O que falta para lançar uma versão beta "utilizável":
+* Dar um "tapa" na interface CallableExpression;
+* "Tapa" na interface ExpressionPack;
+* Suportar o annotation @Cmds;
+* Fazer um tratamento de erro ao criar session que busca Packs externos;
+* Fazer um screencast mostrando o DoIt;
