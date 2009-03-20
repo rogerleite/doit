@@ -1,10 +1,13 @@
 package org.oneupfordev.doit.packs.descriptors;
 
+import org.oneupfordev.doit.packs.annotations.Cmd;
+import org.oneupfordev.doit.packs.annotations.Cmds;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
-import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
 
 @RootCmd(cmds={"test"})
-@Cmd(name="test", innerCmds={"testInner", "testInner2"})
+@Cmds({
+	@Cmd(name="test", innerCmds={"testInner", "testInner2"})
+})
 public class ExpressionValid extends NakedExampleExpression {
 	
 	public boolean constructorExecuted = false;

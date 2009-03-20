@@ -11,8 +11,9 @@ import net.vidageek.mirror.Mirror;
 
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
+import org.oneupfordev.doit.packs.annotations.Cmd;
+import org.oneupfordev.doit.packs.annotations.Cmds;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
-import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
 import org.oneupfordev.doit.packs.descriptors.CmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
@@ -29,8 +30,8 @@ public class PackLoaderByAnnotation extends PackLoader {
 
 		RootCmd exprDescr = clController.reflect().annotation(RootCmd.class).atClass();
 		if (exprDescr == null) {
-			throw new ExpressionNotValidException("Annotation " + RootCmd.class.getName()
-					+ " not found at class: " + classExpression.getName());
+			String msg = String.format("Annotation %s not found at class: %s", RootCmd.class.getName(), classExpression.getName());
+			throw new ExpressionNotValidException(msg);
 		}
 
 		RootCmdDescriptor expr = new RootCmdDescriptor(classExpression);
@@ -57,12 +58,20 @@ public class PackLoaderByAnnotation extends PackLoader {
 	}
 
 	private Cmd findInnerCmdByName(String nameSearch, ClassController<CallableExpression> clController) {
+		//TODO need to refactor here, because inclusion of Cmds annotation
 		List<Annotation> allAnnotations = clController.reflectAll().annotations().atClass();
 		for(Annotation a : allAnnotations) {
 			if (a instanceof Cmd) {
 				Cmd inner = (Cmd) a;
 				if (inner.name().toLowerCase().equals(nameSearch)) {
 					return inner;
+				}
+			} else if (a instanceof Cmds) {
+				Cmds cmds = (Cmds) a;
+				for (Cmd inner : cmds.value()) {
+					if (inner.name().toLowerCase().equals(nameSearch)) {
+						return inner;
+					}
 				}
 			}
 		}

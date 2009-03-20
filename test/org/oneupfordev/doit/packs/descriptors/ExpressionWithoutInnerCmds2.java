@@ -1,7 +1,7 @@
 package org.oneupfordev.doit.packs.descriptors;
 
+import org.oneupfordev.doit.packs.annotations.Cmd;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
-import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
 
 @RootCmd(cmds={"test"})
 @Cmd(name="test", innerCmds={"testDeep2"})

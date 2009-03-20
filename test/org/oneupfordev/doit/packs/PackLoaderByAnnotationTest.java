@@ -27,7 +27,7 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  */
 public class PackLoaderByAnnotationTest {
 
-	public Class<?>[] getValidClass() {
+	private Class<?>[] getValidClass() {
 		return new Class<?>[] {ExpressionValid.class};
 	}
 

@@ -9,17 +9,15 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.oneupfordev.doit.CallableExpression;
-
 /**
- * <p>Describes the <u>first</u> available commands of an {@link CallableExpression}.</p>
+ * Used to group {@link Cmd} annotations.
  * @author Roger Leite
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface RootCmd {
+public @interface Cmds {
 
-	String[] cmds() default {};
+	Cmd[] value();
 
 }

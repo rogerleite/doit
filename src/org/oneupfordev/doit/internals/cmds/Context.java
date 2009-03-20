@@ -6,8 +6,9 @@ package org.oneupfordev.doit.internals.cmds;
 import java.util.Map.Entry;
 
 import org.oneupfordev.doit.CallableExpression;
+import org.oneupfordev.doit.packs.annotations.Cmd;
 import org.oneupfordev.doit.packs.annotations.RootCmd;
-import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
+
 import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.results.TextResult;
 import org.oneupfordev.doit.stuff.DoItSession;

@@ -36,10 +36,10 @@ Por último e não menos importante, temos que informar a lib qual a ordem váli
 Hoje, isto é feito através de annotations.
 
 @RootCmd(cmds={"traduzir"})
-@Cmds {
-  @Cmd(name="traduzir", innerCmds={"de"})
+@Cmds({
+  @Cmd(name="traduzir", innerCmds={"de"}),
   @Cmd(name="de", innerCmds={"para"})
-}
+})
 public class Google ...
 
 Agora que temos nossa expressão implementada, devemos "empacotá-la", para carregar na lib.
