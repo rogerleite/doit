@@ -5,6 +5,7 @@ Done! * "Tapa" na interface ExpressionPack;
 Done! * Suportar o annotation @Cmds;
 * Fazer um tratamento de erro ao criar session que busca Packs externos;
 * Fazer um screencast mostrando o DoIt;
+* Aplicar licença LGPL nos fontes;
 
 Desejavel:
 
