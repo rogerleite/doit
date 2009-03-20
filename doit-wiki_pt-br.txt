@@ -24,6 +24,12 @@ public class Google implements CallableExpression {
 		return new TextResult(textoTraduzido);
 	}
 
+	public String getAssign() { }
+	public void setAssign(String assign) { }
+
+	public DoItSession getSession() { }
+	public void setSession(DoItSession session) { }
+
 }
 
 Por último e não menos importante, temos que informar a lib qual a ordem válida dos comandos.
@@ -40,13 +46,8 @@ Agora que temos nossa expressão implementada, devemos "empacotá-la", para carr
 
 public class GooglePack implements ExpressionPack {
 
-	public List<Class<? extends CallableExpression>> getExpressions() {
-		List<Class<? extends CallableExpression>> expressions = 
-			new ArrayList<Class<? extends CallableExpression>>();
-
-		expressions.add(Google.class);
-
-		return expressions;
+	public Class<?>[] getExpressions() {
+		return return new Class<?>[] {Google.class};
 	}
 
 	public String getName() { return "GooglePack"; }
