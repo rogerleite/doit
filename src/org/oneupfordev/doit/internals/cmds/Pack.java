@@ -9,8 +9,8 @@ import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.results.TextResult;
-import org.oneupfordev.doit.stuff.Context;
 import org.oneupfordev.doit.stuff.Dictionary;
+import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Support command for DoIt {@link Dictionary} actions.
@@ -19,20 +19,19 @@ import org.oneupfordev.doit.stuff.Dictionary;
 @RootCmd(cmds={"show"})
 class Pack implements CallableExpression {
 
-	private Dictionary dictionary = null;
-
 	private enum Action {
 		DEFAULT_SHOW
 	}
 
 	private Action selectedAction = null;
+	private DoItSession session;
 
 	public Result doIt() {
 		Result result = new TextResult("Action not defined.");
 
 		if (selectedAction == Action.DEFAULT_SHOW) {
 			StringBuilder packs = new StringBuilder("Packs:\n");
-			for (ExprPackDescriptor packDescr : dictionary.getPackDescriptors()) {
+			for (ExprPackDescriptor packDescr : session.getDictionary().getPackDescriptors()) {
 				packs.append("\t").append(packDescr.getName()).append(":\n");
 				for (RootCmdDescriptor rootCmdDescr : packDescr.getDescriptors()) {
 					packs.append("\t\t").append(rootCmdDescr.toString()).append("\n");
@@ -56,18 +55,12 @@ class Pack implements CallableExpression {
 	public void setAssign(String assign) {
 	}
 
-	public Context getContext() {
-		return null;
+	public DoItSession getSession() {
+		return this.session;
 	}
 
-	public void setContext(Context context) {
-	}
-
-	public Dictionary getDictionary() {
-		return dictionary;
-	}
-	public void setDictionary(Dictionary dictionary) {
-		this.dictionary = dictionary;
+	public void setSession(DoItSession session) {
+		this.session = session;
 	}
 
 }

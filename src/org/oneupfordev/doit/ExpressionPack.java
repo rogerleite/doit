@@ -3,24 +3,26 @@
  */
 package org.oneupfordev.doit;
 
-import java.util.List;
+import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
- * It is the main point to get or receive new Expressions.
+ * <p>It is the way to group {@link CallableExpression}s.<br>
+ * With packs, is the only way you can {@link DoItSession#load(ExpressionPack)} new expressions.</p>
  * @author Roger Leite
  */
 public interface ExpressionPack {
 
 	/**
-	 * The point where Module shows the Expressions available.<br>
-	 * If any item of the list is <code>null</code> or not implements {@link CallableExpression},
-	 * throws an {@link IllegalArgumentException}.
-	 * @return an list of {@link CallableExpression}s Classes.
+	 * Used by DoIt to know what {@link CallableExpression}s this pack is compose of.<br>
+	 * If any item of the list is <code>null</code> or not implements {@link CallableExpression}, throws an {@link IllegalArgumentException}.
+	 * @return an array of {@link CallableExpression}s Classes.
 	 */
-	List<Class<? extends CallableExpression>> getExpressions();
+	Class<?>[] getExpressions();
 
 	/**
-	 * @return Name of this ExpressionPack. Used to load in the DoIt's Dictionary.
+	 * Used to load in the DoIt's Dictionary.<br>
+	 * Name cannot be <code>null</code> or empty.
+	 * @return name of this ExpressionPack.
 	 */
 	String getName();
 

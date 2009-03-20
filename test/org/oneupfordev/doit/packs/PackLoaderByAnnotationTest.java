@@ -8,27 +8,28 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Test;
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
 import org.oneupfordev.doit.packs.descriptors.ArgumentType;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
-import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionValid;
 import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutConstructor;
 import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutInnerCmds;
 import org.oneupfordev.doit.packs.descriptors.ExpressionWithoutInnerCmds2;
+import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
 /**
  * Test for loading and validating ExpressionPacks.
  * @author Roger Leite
  */
 public class PackLoaderByAnnotationTest {
+
+	public Class<?>[] getValidClass() {
+		return new Class<?>[] {ExpressionValid.class};
+	}
 
 	@Test
 	public void loadOfExpressionWithoutCommandsAndEmptyConstructor() {
@@ -117,19 +118,15 @@ public class PackLoaderByAnnotationTest {
 			assertTrue(ex.getMessage(), true);
 		}
 		try {
-			ExampleExpressionPack exPackWithZeroExpressions = new ExampleExpressionPack(null, 
-					new ArrayList<Class<? extends CallableExpression>>());
+			ExampleExpressionPack exPackWithZeroExpressions = new ExampleExpressionPack(null, new Class<?>[] {});
 			pl.load(exPackWithZeroExpressions);
 			fail("Load with list \"zero\" have to throw an ExpressionIllegalArgumentException.");
 		} catch (ExpressionIllegalArgumentException ex) {
 			assertTrue(ex.getMessage(), true);
 		}
 
-		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
-		validList.add(ExpressionValid.class);
-
 		try {
-			ExampleExpressionPack exPackWithNameNull = new ExampleExpressionPack(null, validList);
+			ExampleExpressionPack exPackWithNameNull = new ExampleExpressionPack(null, getValidClass());
 			pl.load(exPackWithNameNull);
 			fail("Load with name null have to throw an ExpressionIllegalArgumentException.");
 		} catch (ExpressionIllegalArgumentException ex) {
@@ -141,24 +138,18 @@ public class PackLoaderByAnnotationTest {
 	public void shouldPackLoadDescriptors() {
 		PackLoader pl = new PackLoaderByAnnotation();
 
-		List<Class<? extends CallableExpression>> validList = new ArrayList<Class<? extends CallableExpression>>();
-		validList.add(ExpressionValid.class);
-		ExampleExpressionPack exPackOneValid = new ExampleExpressionPack("exPackOneValid", validList);
+		ExampleExpressionPack exPackOneValid = new ExampleExpressionPack("exPackOneValid", getValidClass());
 		ExprPackDescriptor packDescrValid = pl.load(exPackOneValid);
 		assertEquals("exPackOneValid", packDescrValid.getName());
 		assertEquals(true, packDescrValid.isOk());
 
-		List<Class<? extends CallableExpression>> invalidList = new ArrayList<Class<? extends CallableExpression>>();
-		invalidList.add(ExpressionWithoutInnerCmds2.class);
-		ExampleExpressionPack exPackOneInvalid = new ExampleExpressionPack("exPackOneInvalid", invalidList);
+		ExampleExpressionPack exPackOneInvalid = new ExampleExpressionPack("exPackOneInvalid", new Class<?>[] {ExpressionWithoutInnerCmds2.class});
+
 		ExprPackDescriptor packDescrInvalid = pl.load(exPackOneInvalid);
 		assertEquals("exPackOneInvalid", packDescrInvalid.getName());
 		assertEquals(false, packDescrInvalid.isOk());
 
-		List<Class<? extends CallableExpression>> sosoList = new ArrayList<Class<? extends CallableExpression>>();
-		sosoList.add(ExpressionValid.class);
-		sosoList.add(ExpressionWithoutInnerCmds2.class);
-		ExampleExpressionPack exPack = new ExampleExpressionPack("exPack", sosoList);
+		ExampleExpressionPack exPack = new ExampleExpressionPack("exPack", new Class<?>[] {ExpressionValid.class, ExpressionWithoutInnerCmds2.class});
 		ExprPackDescriptor packDescr = pl.load(exPack);
 		assertEquals("exPack", packDescr.getName());
 		assertEquals(false, packDescr.isOk());

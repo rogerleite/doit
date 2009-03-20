@@ -21,15 +21,11 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
  */
 public class PackLoaderByAnnotation extends PackLoader {
 
-	/* (non-Javadoc)
-	 * @see org.oneupfordev.doit.packs.PackLoader#load(java.lang.Class)
-	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	RootCmdDescriptor validateAndLoad(Class<? extends CallableExpression> classExpression) {
-		
-		ClassController<CallableExpression> clController = 
-			(ClassController<CallableExpression>) Mirror.on(classExpression);
+
+		ClassController<CallableExpression> clController = (ClassController<CallableExpression>) Mirror.on(classExpression);
 
 		RootCmd exprDescr = clController.reflect().annotation(RootCmd.class).atClass();
 		if (exprDescr == null) {

@@ -41,7 +41,7 @@ public class DoItSession {
 	DoItSession(final Context context, final Dictionary dictionary) {
 		this.context = context;
 		this.dictionary = dictionary;
-		expressionParser = new ExpressionParser(this.context, this.dictionary);
+		expressionParser = new ExpressionParser(this);
 	}
 
 	void loadInternalPack() {
@@ -66,6 +66,14 @@ public class DoItSession {
 
 	public CallableExpression parse(final String expression) {
 		return expressionParser.parse(expression);
+	}
+
+	public Context getContext() {
+		return this.context;
+	}
+
+	public Dictionary getDictionary() {
+		return this.dictionary;  //TODO in future, find a way to return a read-only dictionary.
 	}
 
 }

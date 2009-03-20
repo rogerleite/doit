@@ -42,8 +42,7 @@ public class ExpressionParserTest {
 		CallableExpression ce = sessionMock.parse("expressionvalid");
 		checkCallableExpression(ce, true, false, null, false, false,
 				false, null, false, null);
-		assertNotNull("Context field cannot be null.", ce.getContext());
-		assertNotNull("\"Hidden\" Dictionary field cannot be null.", ((ExpressionValid) ce).getDictionary());
+		assertNotNull("Context field cannot be null.", ce.getSession());
 
 		ce = sessionMock.parse("expressionvalid 'arg_constructor'");
 		checkCallableExpression(ce, false, true, "arg_constructor", false, false,

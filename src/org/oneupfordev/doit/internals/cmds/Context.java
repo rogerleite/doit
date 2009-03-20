@@ -10,6 +10,7 @@ import org.oneupfordev.doit.packs.annotations.RootCmd;
 import org.oneupfordev.doit.packs.annotations.RootCmd.Cmd;
 import org.oneupfordev.doit.results.Result;
 import org.oneupfordev.doit.results.TextResult;
+import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Support command for DoIt {@link org.oneupfordev.doit.stuff.Context} actions.
@@ -19,7 +20,8 @@ import org.oneupfordev.doit.results.TextResult;
 @Cmd(name="add", innerCmds={"value"})
 class Context implements CallableExpression {
 
-	org.oneupfordev.doit.stuff.Context ctx = null;
+	private org.oneupfordev.doit.stuff.Context ctx = null;
+	private DoItSession session;
 
 	private enum Action {
 		DEFAULT_SHOW,
@@ -74,15 +76,16 @@ class Context implements CallableExpression {
 		return null;
 	}
 
-	public org.oneupfordev.doit.stuff.Context getContext() {
-		return ctx;
-	}
-
 	public void setAssign(String assign) {
 	}
 
-	public void setContext(org.oneupfordev.doit.stuff.Context context) {
-		ctx = context;
+	public DoItSession getSession() {
+		return this.session;
+	}
+
+	public void setSession(DoItSession session) {
+		this.session = session;
+		this.ctx = session.getContext();
 	}
 
 }

@@ -3,7 +3,6 @@
  */
 package org.oneupfordev.doit.parsers;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.List;
 
@@ -14,19 +13,20 @@ import net.vidageek.mirror.ObjectController;
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.exceptions.InvalidExpressionException;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
-import org.oneupfordev.doit.stuff.Context;
 import org.oneupfordev.doit.stuff.Dictionary;
+import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * @author Roger Leite
  */
 public class ExpressionParser {
-	private Context context = null;
+
+	private DoItSession session = null;
 	private Dictionary dictionary = null;
 
-	public ExpressionParser(final Context context, final Dictionary dictionary) {
-		this.context = context;
-		this.dictionary = dictionary;
+	public ExpressionParser(final DoItSession session) {
+		this.session = session;
+		this.dictionary = session.getDictionary();
 	}
 
 	public CallableExpression parse(final String expression) throws InvalidExpressionException {
@@ -42,7 +42,9 @@ public class ExpressionParser {
 
 		ClassController<? extends CallableExpression> callableController = Mirror.on(rootCmdDescr.getClassExpression());
 		CallableExpression callable = createInstance(callableController, words.get(0));
-		injectStuff(callableController, compiler, callable);
+
+		callable.setSession(session);  //inject session
+		callable.setAssign(compiler.getAssign());  //set assign
 
 		ObjectController objectController = Mirror.on(callable);
 
@@ -78,23 +80,8 @@ public class ExpressionParser {
 		return callable;
 	}
 
-	private void injectStuff(final ClassController<?> callableController,
-							final Compiler compiler,
-							final CallableExpression callable) {
-
-		callable.setContext(context);
-		Field dictionaryField = callableController.reflect().field("dictionary");
-		if (dictionaryField != null) {
-			Mirror.on(callable).set().field(dictionaryField).withValue(dictionary);
-		}
-
-		if (compiler.getAssign() != null) {
-			callable.setAssign(compiler.getAssign());
-		}
-	}
-
 	private Method findMethod(final ClassController<? extends CallableExpression> classController,
-							final CallableWord callableWord) {
+											final CallableWord callableWord) {
 
 		boolean withArgs = callableWord.getArgument() != null;
 		String value = callableWord.getWord();
