@@ -1,3 +1,22 @@
+/*
+* This file is part of DoIt.
+* 
+* DoIt is free software: you can redistribute it and/or modify
+* it under the terms of the GNU Lesser General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+
+* DoIt is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Lesser General Public License for more details.
+
+* You should have received a copy of the GNU Lesser General Public License
+* along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
+* 
+* Copyright 2009 Roger Leite
+ */
+
 /**
  * 
  */
@@ -34,6 +53,7 @@ public class ConsoleApp {
 		DoItSession session = createDoItSession();
 		sysOut(" done!\n");
 		sysOutln("=========================");
+		sysOutln("\n" + getLGPLMessage() + "\n");
 		sysOutln(getHelpMessage());
 
 		Scanner sc = new Scanner(System.in);
@@ -95,4 +115,10 @@ public class ConsoleApp {
 		return "Type '" + QUIT + "' to exit from here!";
 	}
 
+	private String getLGPLMessage() {
+		return "DoIt  Copyright (C) 2009  Roger Leite\n" +
+					"This program comes with ABSOLUTELY NO WARRANTY;\n" +
+					"This is free software, and you are welcome to redistribute it " +
+					"under certain conditions;";
+	}
 }
