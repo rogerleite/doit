@@ -22,6 +22,13 @@
  */
 package org.oneupfordev.doit.stuff;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 /**
  * It is the object responsible for creating new {@link DoItSession}s.
  * @author Roger Leite
