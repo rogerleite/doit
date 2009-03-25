@@ -1,20 +1,20 @@
 /*
-* This file is part of DoIt.
-* 
-* DoIt is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+ * This file is part of DoIt.
+ * 
+ * DoIt is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
 
-* DoIt is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
+ * DoIt is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
 
-* You should have received a copy of the GNU Lesser General Public License
-* along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
-* 
-* Copyright 2009 Roger Leite
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009 Roger Leite
  */
 
 /**
@@ -34,34 +34,30 @@ import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Support command for DoIt {@link org.oneupfordev.doit.stuff.Context} actions.
+ * 
  * @author Roger Leite
  */
-@RootCmd(cmds={"show", "add"})
-@Cmd(name="add", innerCmds={"value"})
+@RootCmd(cmds = { "show", "add" })
+@Cmd(name = "add", innerCmds = { "value" })
 class Context implements CallableExpression {
 
-	private org.oneupfordev.doit.stuff.Context ctx = null;
+	private org.oneupfordev.doit.stuff.Context ctx;
 	private DoItSession session;
 
 	private enum Action {
-		DEFAULT_SHOW,
-		ADD
+		DEFAULT_SHOW, ADD
 	}
 
-	private Action selectedAction = null;
-	private String valueToAdd = null;
-	private String keyToAdd = null;
+	private Action selectedAction;
+	private String valueToAdd;
+	private String keyToAdd;
 
 	public Result doIt() {
 		Result result = null;
 		if (selectedAction == Action.DEFAULT_SHOW) {
-			StringBuilder ctxAttributes = new StringBuilder("Attributes:\n");
-			for (Entry<String, Object> entry : ctx.getAttributes().entrySet()) {
-				ctxAttributes.append("\t")
-								.append(entry.getKey())
-								.append("=")
-								.append(entry.getValue())
-								.append("\n");
+			final StringBuilder ctxAttributes = new StringBuilder("Attributes:\n");
+			for (final Entry<String, Object> entry : ctx.getAttributes().entrySet()) {
+				ctxAttributes.append("\t").append(entry.getKey()).append("=").append(entry.getValue()).append("\n");
 			}
 			result = new TextResult(ctxAttributes.toString());
 		} else if (selectedAction == Action.ADD) {
@@ -81,13 +77,13 @@ class Context implements CallableExpression {
 		return this;
 	}
 
-	public Context add(String key) {
+	public Context add(final String key) {
 		selectedAction = Action.ADD;
 		keyToAdd = key;
 		return this;
 	}
 
-	public Context value(String value) {
+	public Context value(final String value) {
 		valueToAdd = value;
 		return this;
 	}
@@ -96,14 +92,15 @@ class Context implements CallableExpression {
 		return null;
 	}
 
-	public void setAssign(String assign) {
+	public void setAssign(final String assign) {
+		// TODO Refactor
 	}
 
 	public DoItSession getSession() {
 		return this.session;
 	}
 
-	public void setSession(DoItSession session) {
+	public void setSession(final DoItSession session) {
 		this.session = session;
 		this.ctx = session.getContext();
 	}

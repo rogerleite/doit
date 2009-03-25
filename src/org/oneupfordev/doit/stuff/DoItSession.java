@@ -1,20 +1,20 @@
 /*
-* This file is part of DoIt.
-* 
-* DoIt is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+ * This file is part of DoIt.
+ * 
+ * DoIt is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
 
-* DoIt is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
+ * DoIt is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
 
-* You should have received a copy of the GNU Lesser General Public License
-* along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
-* 
-* Copyright 2009 Roger Leite
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009 Roger Leite
  */
 
 /**
@@ -35,27 +35,32 @@ import org.oneupfordev.doit.packs.search.PackFinder;
 import org.oneupfordev.doit.parsers.ExpressionParser;
 
 /**
- * <p>This object allows:<br>
+ * <p>
+ * This object allows:<br>
  * <ul>
- * <li>full access  to {@link Context}.</li>
+ * <li>full access to {@link Context}.</li>
  * <li><b>read only</b> access to {@link Dictionary}.</li>
  * <li>Parse Expressions!</li>
  * <li>load new {@link ExpressionPack}s of your application.</li>
  * </ul>
  * </p>
+ * 
  * @author Roger Leite
  */
 public class DoItSession {
 
-	Context context = null;
-	Dictionary dictionary = null;
-	ExpressionParser expressionParser = null;
+	Context context;
+	Dictionary dictionary;
+	ExpressionParser expressionParser;
 
 	/**
 	 * Default access.<br>
 	 * Generally {@link DoIt} creates this object.
-	 * @param context with "pack path" attribute.
-	 * @param dictionary empty one.
+	 * 
+	 * @param context
+	 *            with "pack path" attribute.
+	 * @param dictionary
+	 *            empty one.
 	 */
 	DoItSession(final Context context, final Dictionary dictionary) {
 		this.context = context;
@@ -68,18 +73,18 @@ public class DoItSession {
 	}
 
 	void loadExternalPacks(final String packPath) {
-		PackFinder packFinder = new PackFinder();
-		List<FolderPack> packs = packFinder.lookForPacks(packPath);
-		List<ExpressionPack> exprPacks = packFinder.instantiatePacks(packs);
-		for (ExpressionPack expPack : exprPacks) {
+		final PackFinder packFinder = new PackFinder();
+		final List<FolderPack> packs = packFinder.lookForPacks(packPath);
+		final List<ExpressionPack> exprPacks = packFinder.instantiatePacks(packs);
+		for (final ExpressionPack expPack : exprPacks) {
 			load(expPack);
 		}
 	}
 
-	public void load(ExpressionPack expressionPack) {
-		//TODO document all possible exceptions can occurs.
-		PackLoader packLoader = new PackLoaderByAnnotation();
-		ExprPackDescriptor exprPackDescriptor = packLoader.load(expressionPack);
+	public void load(final ExpressionPack expressionPack) {
+		// TODO document all possible exceptions can occurs.
+		final PackLoader packLoader = new PackLoaderByAnnotation();
+		final ExprPackDescriptor exprPackDescriptor = packLoader.load(expressionPack);
 		dictionary.add(exprPackDescriptor);
 	}
 
@@ -92,7 +97,8 @@ public class DoItSession {
 	}
 
 	public Dictionary getDictionary() {
-		return this.dictionary;  //TODO in future, find a way to return a read-only dictionary.
+		return this.dictionary; // TODO in future, find a way to return a
+								// read-only dictionary.
 	}
 
 }

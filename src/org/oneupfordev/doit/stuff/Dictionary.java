@@ -1,20 +1,20 @@
 /*
-* This file is part of DoIt.
-* 
-* DoIt is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+ * This file is part of DoIt.
+ * 
+ * DoIt is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
 
-* DoIt is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
+ * DoIt is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
 
-* You should have received a copy of the GNU Lesser General Public License
-* along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
-* 
-* Copyright 2009 Roger Leite
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009 Roger Leite
  */
 
 /**
@@ -32,20 +32,22 @@ import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
 /**
  * Responsible for managing Descriptors.
+ * 
  * @author Roger Leite
  */
 public class Dictionary {
 
-	private Set<ExprPackDescriptor> setPackDescriptors = new HashSet<ExprPackDescriptor>();
+	private final Set<ExprPackDescriptor> setPackDescriptors = new HashSet<ExprPackDescriptor>();
 
 	/**
 	 * Default access.<br>
 	 * Generally {@link DoIt} creates this object.
 	 */
 	Dictionary() {
+		// intentionally empty
 	}
 
-	public void add(ExprPackDescriptor packDescriptor) {
+	public void add(final ExprPackDescriptor packDescriptor) {
 		if (packDescriptor == null) {
 			throw new RuntimeException("packDescriptor cannot be null.");
 		}
@@ -59,10 +61,10 @@ public class Dictionary {
 		if (expression == null || "".equals(expression.trim())) {
 			throw new ExpressionIllegalArgumentException("expression cannot be null or empty.");
 		}
-		String trimmedExpr = expression.trim();
-		String rootCmdName = trimmedExpr.split(" ")[0];
-		for (ExprPackDescriptor packDescriptor : setPackDescriptors) {
-			for (RootCmdDescriptor cmdDescr : packDescriptor.getDescriptors()) {
+		final String trimmedExpr = expression.trim();
+		final String rootCmdName = trimmedExpr.split(" ")[0];
+		for (final ExprPackDescriptor packDescriptor : setPackDescriptors) {
+			for (final RootCmdDescriptor cmdDescr : packDescriptor.getDescriptors()) {
 				if (cmdDescr.getName().equalsIgnoreCase(rootCmdName)) {
 					return cmdDescr;
 				}
@@ -72,7 +74,8 @@ public class Dictionary {
 	}
 
 	/**
-	 * @return <b>Read Only</b> {@link Set} of loaded {@link ExprPackDescriptor}s.
+	 * @return <b>Read Only</b> {@link Set} of loaded {@link ExprPackDescriptor}
+	 *         s.
 	 */
 	public Set<ExprPackDescriptor> getPackDescriptors() {
 		return Collections.unmodifiableSet(setPackDescriptors);

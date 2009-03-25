@@ -1,20 +1,20 @@
 /*
-* This file is part of DoIt.
-* 
-* DoIt is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* (at your option) any later version.
+ * This file is part of DoIt.
+ * 
+ * DoIt is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
 
-* DoIt is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Lesser General Public License for more details.
+ * DoIt is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
 
-* You should have received a copy of the GNU Lesser General Public License
-* along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
-* 
-* Copyright 2009 Roger Leite
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with DoIt.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Copyright 2009 Roger Leite
  */
 
 /**
@@ -31,49 +31,51 @@ import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
  * Console Application to run {@link CallableExpression}s.
+ * 
  * @author Roger Leite
  */
 public class ConsoleApp {
 
 	private static final String QUIT = "quit!";
-	private String userAt = null;
+	private String userAt;
 
-	public static void main(String[] args) {
-		ConsoleApp consoleApp = new ConsoleApp();
+	public static void main(final String[] args) {
+		final ConsoleApp consoleApp = new ConsoleApp();
 		consoleApp.startConsole();
 	}
 
 	private ConsoleApp() {
+		// intentionally empty
 	}
 
 	public void startConsole() {
 		sysOutln("=========================");
 		sysOutln("Welcome to DoIt Console!");
 		sysOut("\nGetting ExpressionParser ...");
-		DoItSession session = createDoItSession();
+		final DoItSession session = createDoItSession();
 		sysOut(" done!\n");
 		sysOutln("=========================");
 		sysOutln("\n" + getLGPLMessage() + "\n");
 		sysOutln(getHelpMessage());
 
-		Scanner sc = new Scanner(System.in);
+		final Scanner sc = new Scanner(System.in);
 		sc.useDelimiter("\n");
 
 		sysOut(getTitlePrompt());
-		while (sc.hasNextLine()){
-			String userCmd = sc.next();
+		while (sc.hasNextLine()) {
+			final String userCmd = sc.next();
 			if (QUIT.equalsIgnoreCase(userCmd.trim())) {
 				break;
 			}
 			sysOutln("Executing ... " + userCmd);
 
 			try {
-				CallableExpression ce = session.parse(userCmd);
-				Result result = ce.doIt();
+				final CallableExpression ce = session.parse(userCmd);
+				final Result result = ce.doIt();
 				sysOutln(result.textValue());
-			} catch (Throwable t) {
+			} catch (final Throwable t) {
 				sysOutln("ERROR: " + t.getMessage());
-				//t.printStackTrace();
+				// t.printStackTrace();
 				sysOutln("\n" + getHelpMessage());
 			}
 
@@ -93,11 +95,11 @@ public class ConsoleApp {
 	private DoItSession createDoItSession() {
 		try {
 			return new DoIt().createSession(true);
-		} catch(Throwable t) {
+		} catch (final Throwable t) {
 			t.printStackTrace();
 			try {
 				return new DoIt().createSession();
-			} catch (Throwable t2) {
+			} catch (final Throwable t2) {
 				t2.printStackTrace();
 				throw new RuntimeException(t2.getMessage(), t2);
 			}
@@ -116,9 +118,7 @@ public class ConsoleApp {
 	}
 
 	private String getLGPLMessage() {
-		return "DoIt  Copyright (C) 2009  Roger Leite\n" +
-					"This program comes with ABSOLUTELY NO WARRANTY;\n" +
-					"This is free software, and you are welcome to redistribute it " +
-					"under certain conditions;";
+		return "DoIt  Copyright (C) 2009  Roger Leite\n" + "This program comes with ABSOLUTELY NO WARRANTY;\n"
+				+ "This is free software, and you are welcome to redistribute it " + "under certain conditions;";
 	}
 }
