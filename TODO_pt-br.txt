@@ -9,4 +9,6 @@ Done! * Aplicar licença LGPL nos fontes;
 
 Desejavel:
 
-* Melhorar a mensagem das exceptions: InvalidExpressionException e ParseExpressionException
+Done! * Melhorar a mensagem das exceptions: InvalidExpressionException e ParseExpressionException
+* Validar expressão pela "metade", por exemplo para a expressão 
+  "google traduzir de 'en' para 'pt': xxx" ao executar somente "google", tem que dar erro.
