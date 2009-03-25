@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.oneupfordev.doit.exceptions.InvalidExpressionException;
-import org.oneupfordev.doit.exceptions.ParseExpressionException;
 import org.oneupfordev.doit.packs.descriptors.ArgumentType;
 import org.oneupfordev.doit.packs.descriptors.CmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
+import org.oneupfordev.doit.parsers.exceptions.InvalidExpressionException;
+import org.oneupfordev.doit.parsers.exceptions.ParseExpressionException;
 
 /**
  * Validate and "compile" an expression, in a list of {@link CallableWord}s.
@@ -64,7 +64,7 @@ class Compiler {
 			try {
 				extractWords(compilerPointer, Arrays.asList(castOfRootCmd));
 			} catch (ParseExpressionException e) {
-				String msg = String.format("Invalid syntax at index %d.\n" + e.getMessage(), e.getErrorOffset());
+				String msg = String.format("Invalid syntax at index %d.\n%s", e.getErrorOffset(), e.getMessage());
 				throw new InvalidExpressionException(expression, compilerPointer.getCurrentIndex(), msg, e);
 			}
 		}

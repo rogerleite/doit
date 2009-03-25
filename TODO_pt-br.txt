@@ -4,8 +4,8 @@ Done! * Dar um "tapa" na interface CallableExpression;
 Done! * "Tapa" na interface ExpressionPack;
 Done! * Suportar o annotation @Cmds;
 * Fazer um tratamento de erro ao criar session que busca Packs externos;
-* Fazer um screencast mostrando o DoIt;
 Done! * Aplicar licença LGPL nos fontes;
+* Fazer um screencast mostrando o DoIt;
 
 Desejavel:
 

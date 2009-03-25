@@ -24,7 +24,7 @@ package org.oneupfordev.doit.parsers;
 
 import static junit.framework.Assert.*;
 import org.junit.Test;
-import org.oneupfordev.doit.exceptions.ParseExpressionException;
+import org.oneupfordev.doit.parsers.exceptions.ParseExpressionException;
 
 /**
  * Tests of {@link CompilerPointer}.

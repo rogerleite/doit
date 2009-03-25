@@ -30,8 +30,8 @@ import net.vidageek.mirror.Mirror;
 import net.vidageek.mirror.ObjectController;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.exceptions.InvalidExpressionException;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
+import org.oneupfordev.doit.parsers.exceptions.InvalidExpressionException;
 import org.oneupfordev.doit.stuff.Dictionary;
 import org.oneupfordev.doit.stuff.DoItSession;
 
@@ -48,7 +48,7 @@ public class ExpressionParser {
 		this.dictionary = session.getDictionary();
 	}
 
-	public CallableExpression parse(final String expression) throws InvalidExpressionException {
+	public CallableExpression parse(final String expression) {
 		RootCmdDescriptor rootCmdDescr = dictionary.find(expression);
 		if (rootCmdDescr == null) {
 			throw new InvalidExpressionException(expression, 0, "Unknow expression.");
@@ -115,7 +115,8 @@ public class ExpressionParser {
 				}
 			}
 		}
-		throw new InvalidExpressionException(null, -1, "Method '" + value + "' cannot be found.");
+		String msg = String.format("Method '%s' cannot be found.", value);
+		throw new InvalidExpressionException(null, -1, msg);
 	}
 
 }

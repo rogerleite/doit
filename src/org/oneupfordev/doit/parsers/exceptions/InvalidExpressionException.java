@@ -17,17 +17,15 @@
 * Copyright 2009 Roger Leite
  */
 
-/**
- * 
- */
-package org.oneupfordev.doit.exceptions;
+package org.oneupfordev.doit.parsers.exceptions;
+
+import java.util.Arrays;
 
 import org.oneupfordev.doit.parsers.ExpressionParser;
-import org.oneupfordev.doit.stuff.Dictionary;
 
 /**
  * <p>Used to indicate problems can occurs when <b>validating</b> expression.<br>
- * This validation is done at compile phrase, by {@link ExpressionParser} with help of {@link Dictionary}.</p>
+ * This validation is done at compile phrase, by {@link ExpressionParser}.</p>
  * @author Roger Leite
  */
 public class InvalidExpressionException extends RuntimeException {
@@ -35,17 +33,38 @@ public class InvalidExpressionException extends RuntimeException {
 	/** Default serial version. */
 	private static final long serialVersionUID = 1L;
 
+	/** Message exception. */
+	private String message = null;
+
 	public InvalidExpressionException(final String expression,
-			final int indexProblem,
-			final String messsage) {
-		super(messsage);
+													final int indexError,
+													final String message) {
+		super(message);
+		customizeMessage(expression, indexError, message);
 	}
 
 	public InvalidExpressionException(final String expression,
-			final int indexProblem,
-			final String messsage,
-			final Throwable cause) {
-		super(messsage, cause);
+													final int indexError,
+													final String message,
+													final Throwable cause) {
+		super(message, cause);
+		customizeMessage(expression, indexError, message);
+	}
+
+	@Override
+	public String getMessage() {
+		return this.message;
+	}
+
+	private void customizeMessage(final String expression, int indexError, final String message) {
+		this.message = message;
+
+		if (indexError > 0) {
+			char[] pointer = new char[indexError];
+			Arrays.fill(pointer, ' ');
+			pointer[indexError - 1] = '^';
+			this.message += "\n" + expression + "\n" + String.valueOf(pointer);
+		}
 	}
 
 }

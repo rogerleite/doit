@@ -17,10 +17,7 @@
 * Copyright 2009 Roger Leite
  */
 
-/**
- * 
- */
-package org.oneupfordev.doit.exceptions;
+package org.oneupfordev.doit.parsers.exceptions;
 
 import java.text.ParseException;
 
@@ -28,7 +25,7 @@ import org.oneupfordev.doit.parsers.ExpressionParser;
 
 /**
  * <p>This exception is used during parse of Expression by {@link ExpressionParser#parse(String)}.<br>
- * In compile phrase, this exception can be thrown to indicate a problem in the <b>syntax</b> expression.</p>
+ * In compile phrase, this exception can be thrown to indicate a problem in the <b>syntax</b> of the expression.</p>
  * @author Roger Leite
  */
 public class ParseExpressionException extends ParseException {
@@ -38,10 +35,10 @@ public class ParseExpressionException extends ParseException {
 
 	/**
 	 * Default constructor.
-	 * @param message
-	 * @param offSet
+	 * @param message explaining the problem with syntax
+	 * @param offSet index that occurred the problem
 	 */
-	public ParseExpressionException(String message, int offSet) {
+	public ParseExpressionException(final String message, int offSet) {
 		super(message, offSet);
 	}
 
