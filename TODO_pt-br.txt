@@ -2,7 +2,6 @@ O que falta para lançar uma versão beta "utilizável":
 
 * Fazer um tratamento de erro ao criar session que busca Packs externos;
 * Fazer um screencast mostrando o DoIt;
-* Migrar o projeto de Ant para Maven;
 * Adicionar logging para substituir os println;
 * Refatorar as classes onde os getters não têm função - ver TODOs nos fontes;
 
@@ -11,6 +10,7 @@ Done! * "Tapa" na interface ExpressionPack;
 Done! * Suportar o annotation @Cmds;
 Done! * Aplicar licença LGPL nos fontes;
 Done! * Ordenar o arquivo de TODO com os itens concluídos no final;
+Done! * Migrar o projeto de Ant para Maven;
 
 Desejavel:
 
