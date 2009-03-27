@@ -1,12 +1,12 @@
 <assembly>
-	<id>pack</id>
+	<id>${version}</id>
 	<formats>
 		<format>zip</format>
 	</formats>
 
 	<dependencySets>
 		<dependencySet>
-			<outputDirectory>/lib</outputDirectory>
+			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
 			<scope>runtime</scope>
 		</dependencySet>
@@ -22,13 +22,13 @@
 		</fileSet>
 
 		<fileSet>
-			<directory>/lib</directory>
-			<outputDirectory>/lib</outputDirectory>
+			<directory>lib</directory>
+			<outputDirectory>lib</outputDirectory>
 		</fileSet>
 
 		<fileSet>
-			<directory>/samplePacks</directory>
-			<outputDirectory>/samplePacks</outputDirectory>
+			<directory>samplePacks</directory>
+			<outputDirectory>packs</outputDirectory>
 		</fileSet>
 
 		<fileSet>
