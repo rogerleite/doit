@@ -9,10 +9,14 @@
 			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
 			<scope>runtime</scope>
+			<excludes>
+				<exclude>doit*.jar</exclude>
+			</excludes>
 		</dependencySet>
 	</dependencySets>
 
 	<fileSets>
+
 		<fileSet>
 			<includes>
 				<include>README*</include>
@@ -41,5 +45,6 @@
 				<include>*.jar</include>
 			</includes>
 		</fileSet>
+
 	</fileSets>
 </assembly>
