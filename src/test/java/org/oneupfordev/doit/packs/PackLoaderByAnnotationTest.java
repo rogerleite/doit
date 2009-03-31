@@ -29,7 +29,6 @@ import static junit.framework.Assert.fail;
 
 import org.junit.Test;
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
 import org.oneupfordev.doit.packs.descriptors.ArgumentType;
 import org.oneupfordev.doit.packs.descriptors.ExampleExpressionPack;
@@ -126,21 +125,21 @@ public class PackLoaderByAnnotationTest {
 		try {
 			pl.load(null);
 			fail("Load null have to throw an ExpressionIllegalArgumentException.");
-		} catch (ExpressionIllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			assertTrue(ex.getMessage(), true);
 		}
 		try {
 			ExampleExpressionPack exPackWithNullExpressions = new ExampleExpressionPack("mock");
 			pl.load(exPackWithNullExpressions);
 			fail("Load with list null have to throw an ExpressionIllegalArgumentException.");
-		} catch (ExpressionIllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			assertTrue(ex.getMessage(), true);
 		}
 		try {
 			ExampleExpressionPack exPackWithZeroExpressions = new ExampleExpressionPack(null, new Class<?>[] {});
 			pl.load(exPackWithZeroExpressions);
 			fail("Load with list \"zero\" have to throw an ExpressionIllegalArgumentException.");
-		} catch (ExpressionIllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			assertTrue(ex.getMessage(), true);
 		}
 
@@ -148,7 +147,7 @@ public class PackLoaderByAnnotationTest {
 			ExampleExpressionPack exPackWithNameNull = new ExampleExpressionPack(null, getValidClass());
 			pl.load(exPackWithNameNull);
 			fail("Load with name null have to throw an ExpressionIllegalArgumentException.");
-		} catch (ExpressionIllegalArgumentException ex) {
+		} catch (IllegalArgumentException ex) {
 			assertTrue(ex.getMessage(), true);
 		}
 	}

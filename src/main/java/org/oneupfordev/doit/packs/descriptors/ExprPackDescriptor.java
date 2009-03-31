@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.packs.PackLoader;
 
 /**
@@ -38,9 +37,14 @@ public class ExprPackDescriptor {
 	protected List<RootCmdDescriptor> descriptors = new ArrayList<RootCmdDescriptor>();
 	protected List<Throwable> errors = new ArrayList<Throwable>();
 
+	/**
+	 * Creates the Expression Pack descriptor.<br>
+	 * If name is <code>null</code> or empty, throws an {@link IllegalArgumentException}.
+	 * @param name of Expression Pack descriptor.
+	 */
 	public ExprPackDescriptor(String name) {
 		if (name == null || "".equals(name.trim())) {
-			throw new ExpressionIllegalArgumentException("Name of Expression Pack Descriptor cannot be null or empty.");
+			throw new IllegalArgumentException("Name of Expression Pack Descriptor cannot be null or empty.");
 		}
 		this.name = name;
 	}

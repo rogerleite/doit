@@ -27,7 +27,7 @@ import org.oneupfordev.doit.results.TextResult;
 import org.oneupfordev.doit.stuff.DoItSession;
 
 /**
- * This interface is what makes an Expression Callable.<br>
+ * This interface is what makes an Expression "callable".<br>
  * TODO: I am pending to put more detailed information here.
  * @author Roger Leite
  */
@@ -40,31 +40,33 @@ public interface CallableExpression {
 	Result doIt();
 
 	/**
-	 * Assign is the "right side" of an expression, after colon character.<br>
+	 * Assign is the "right side" of an expression, after ":" (colon) character.
+	 * <p>
 	 * If assign not found in expression, <code>null</code> is set.
 	 * @param assign injected by Parser.
 	 */
 	void setAssign(String assign);
+
 	/**
-	 * Not used by DoIt library. Getter is here, just as convention.
-	 * @return <code>null</code> or assign injected previously.
+	 * @return <code>null</code> or assign injected previously by {@link #setAssign(String)}.
 	 */
 	String getAssign();
 
 	/**
-	 * Session is the one of main objects of DoIt.<br>
+	 * Session who started the parsing of this expression.
+	 * <p>
 	 * You can do a lot of things like:<br>
 	 * <ul>
-	 * <li>{@link DoItSession#parse(String)} others expressions</li>
-	 * <li>access to {@link DoItSession#getContext()} variables.</li>
-	 * <li>access to {@link DoItSession#getDictionary()} of loaded expressions.</li>
+	 * <li>{@link DoItSession#parse(String)} others expressions.</li>
+	 * <li>Access to {@link DoItSession#getContext()} variables.</li>
+	 * <li>Access to {@link DoItSession#getDictionary()} of loaded expressions.</li>
 	 * </ul>
-	 * @param session injected by Parser.
+	 * @param session injected after creation of Expression instance.
 	 */
 	void setSession(DoItSession session);
+
 	/**
-	 * Not used by DoIt library. Getter is here, just as convention.
-	 * @return <code>null</code> or session injected previously.
+	 * @return <code>null</code> or session injected previously by {@link #setSession(DoItSession)}.
 	 */
 	DoItSession getSession();
 

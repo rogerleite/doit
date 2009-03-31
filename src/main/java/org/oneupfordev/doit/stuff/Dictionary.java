@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
 import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
@@ -59,7 +58,7 @@ public class Dictionary {
 
 	public RootCmdDescriptor find(final String expression) {
 		if (expression == null || "".equals(expression.trim())) {
-			throw new ExpressionIllegalArgumentException("expression cannot be null or empty.");
+			throw new IllegalArgumentException("expression cannot be null or empty.");
 		}
 		final String trimmedExpr = expression.trim();
 		final String rootCmdName = trimmedExpr.split(" ")[0];

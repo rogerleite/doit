@@ -5,8 +5,8 @@
 	<artifactId>doit</artifactId>
 	<packaging>jar</packaging>
 	<version>0.2-beta</version>
-	<name>Maven Quick Start Archetype</name>
-	<url>http://maven.apache.org</url>
+	<name>DoIt</name>
+	<url>http://github.com/RogerLeite/doit</url>
 	<build>
 		<plugins>
 			<plugin>

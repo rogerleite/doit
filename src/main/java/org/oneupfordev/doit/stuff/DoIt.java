@@ -22,17 +22,34 @@
  */
 package org.oneupfordev.doit.stuff;
 
+import org.oneupfordev.doit.packs.search.PackFinder;
+
 /**
- * It is the object responsible for creating new {@link DoItSession}s.
- * 
+ * Creates {@link DoItSession}s.
  * @author Roger Leite
  */
 public class DoIt {
 
+	/** Default constructor. */
+	public DoIt() {
+		// intentionally empty
+	}
+
+	/**
+	 * Creates new session, with only internal expressions loaded.
+	 * @return session with only internal expressions loaded.
+	 */
 	public DoItSession createSession() {
 		return createSession(false);
 	}
 
+	/**
+	 * Creates new session, and do some additional steps to load external packs.
+	 * <p>
+	 * These additional steps, you can see with details at {@link PackFinder} java doc.
+	 * @param loadExternalPacks <code>true</code> if you want to load "external" expression.
+	 * @return session with "external" expressions loaded if parameter above is <code>true</code>.
+	 */
 	public DoItSession createSession(final boolean loadExternalPacks) {
 		final Context context = createContext();
 		return getDoItSession(context, loadExternalPacks);

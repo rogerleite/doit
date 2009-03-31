@@ -24,3 +24,4 @@ Desejável:
 Done! * Melhorar a mensagem das exceptions: InvalidExpressionException e ParseExpressionException
 * Validar expressão pela "metade", por exemplo para a expressão 
   "google traduzir de 'en' para 'pt': xxx" ao executar somente "google", tem que dar erro.* Gerar o GitHub Page
+* Make the access to Dictionary read-only at DoItSession

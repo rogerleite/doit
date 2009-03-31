@@ -35,6 +35,7 @@ import org.oneupfordev.doit.packs.search.PackFinder;
 import org.oneupfordev.doit.parsers.ExpressionParser;
 
 /**
+ * This is the central API class abstracting the notion of parsing an expression.
  * <p>
  * This object allows:<br>
  * <ul>
@@ -43,9 +44,19 @@ import org.oneupfordev.doit.parsers.ExpressionParser;
  * <li>Parse Expressions!</li>
  * <li>load new {@link ExpressionPack}s of your application.</li>
  * </ul>
- * </p>
- * 
+ * <p>
+ * Here is an example of a typical use of DoitSession:
+ * <pre>
+ * <code>
+ * DoItSession session = new DoIt().createSession();
+ * session.load(new GooglePack());  //you can find this example at <code>samplePacks</code> folder. ;-)
+ * CallableExpression ce = session.parse("google translate from 'en' to 'pt-br' : hey! Doit is working!");
+ * Result result = ce.doIt();
+ * System.out.println(result.textValue());
+ * </code>
+ * </pre>
  * @author Roger Leite
+ * @see DoIt
  */
 public class DoItSession {
 

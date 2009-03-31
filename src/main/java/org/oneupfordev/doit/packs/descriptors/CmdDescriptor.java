@@ -30,7 +30,6 @@ import java.util.List;
 import net.vidageek.mirror.ClassController;
 
 import org.oneupfordev.doit.CallableExpression;
-import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
 import org.oneupfordev.doit.exceptions.ExpressionNotValidException;
 
 /**
@@ -61,9 +60,14 @@ public class CmdDescriptor {
 		return Collections.unmodifiableList(innerCmds);
 	}
 
+	/**
+	 * Set the name of command descriptor.<br>
+	 * if name is <code>null</code> or empty, throws an {@link IllegalArgumentException}.
+	 * @param name of command descriptor.
+	 */
 	protected void setName(final String name) {
 		if (name == null || "".equals(name.trim())) {
-			throw new ExpressionIllegalArgumentException("Name of Command Descriptor cannot be null or empty.");
+			throw new IllegalArgumentException("Name of Command Descriptor cannot be null or empty.");
 		}
 		this.name = name.toLowerCase();
 	}

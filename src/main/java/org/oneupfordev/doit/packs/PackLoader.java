@@ -27,9 +27,8 @@ import java.util.List;
 
 import org.oneupfordev.doit.CallableExpression;
 import org.oneupfordev.doit.ExpressionPack;
-import org.oneupfordev.doit.exceptions.ExpressionIllegalArgumentException;
-import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 import org.oneupfordev.doit.packs.descriptors.ExprPackDescriptor;
+import org.oneupfordev.doit.packs.descriptors.RootCmdDescriptor;
 
 /**
  * Validate and load an {@link ExprPackDescriptor} from an {@link ExpressionPack}.
@@ -41,9 +40,9 @@ public abstract class PackLoader {
 	@SuppressWarnings("unchecked")
 	public ExprPackDescriptor load(final ExpressionPack exPack) {
 		if (exPack == null) {
-			throw new ExpressionIllegalArgumentException("Parameter ExpressionPack cannot be null.");
+			throw new IllegalArgumentException("Parameter ExpressionPack cannot be null.");
 		} else if (exPack.getExpressions() == null) {
-			throw new ExpressionIllegalArgumentException("getExpressions() from ExpressionPack cannot return null.");
+			throw new IllegalArgumentException("getExpressions() from ExpressionPack cannot return null.");
 		}
 
 		Class<?>[] classExpressions = exPack.getExpressions();
@@ -53,12 +52,12 @@ public abstract class PackLoader {
 			if (classImplementsCallableExpression(classExpression)) {
 				list.add((Class<? extends CallableExpression>) classExpression);
 			} else {
-				throw new ExpressionIllegalArgumentException("Class '" + classExpression.getName() + "' not implements CallableExpression.");
+				throw new IllegalArgumentException("Class '" + classExpression.getName() + "' not implements CallableExpression.");
 			}
 		}
 
 		if (list.size() == 0) {
-			throw new ExpressionIllegalArgumentException("getExpressions() from ExpressionPack cannot return zero class.");
+			throw new IllegalArgumentException("getExpressions() from ExpressionPack cannot return zero class.");
 		}
 
 		ExprPackDescriptor packDescr = new ExprPackDescriptor(exPack.getName());

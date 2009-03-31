@@ -1,0 +1,92 @@
+<HTML>
+<BODY>
+
+DoIt is a library which allows validate and run simple expressions, in a easy and practical way.<br>
+Those expression are simply Java classes and must follow some basic rules.
+<p>
+Here is a quick getting started.<br>
+For instance, lets create the expression below:<br>
+<blockquote>
+google translate from 'en' to 'pt-br' : hey! Doit is working!
+</blockquote>
+<p>
+To execute the expression, we will need the following Java class:
+<p>
+<pre>
+<code>
+public class Google implements CallableExpression {
+
+	private String from;
+	private String to;
+
+	public Google translate() { return this; }
+	public Google from(String from) { this.from = from; return this; }
+	public Google to(String para) { this.para = para; return this; }
+
+	public Result doIt() {
+		String text = getAssign();  // here we get text after the ":"
+		// then we call the Google api
+		String translatedText = ...
+		return new TextResult(translatedText);
+	}
+
+	public String getAssign() { }
+	public void setAssign(String assign) { }
+
+	public DoItSession getSession() { }
+	public void setSession(DoItSession session) { }
+
+}
+</code>
+</pre>
+<p>
+And finally we need to define the correct order to call the commands:
+<p>
+Nowadays, we use annotations to do this.
+<p>
+<pre>
+<code>
+&#64;RootCmd(cmds={"translate"})
+  &#64;Cmds({
+  &#64;Cmd(name="translate", innerCmds={"from"}),
+  &#64;Cmd(name="from", innerCmds={"to"})
+ })
+public class Google ...
+</code>
+</pre>
+
+<p>
+After that, we need to pack it to load.
+<p>
+<pre>
+<code>
+public class GooglePack implements ExpressionPack {
+
+	public Class<?>[] getExpressions() {
+		return return new Class<?>[] {Google.class};
+	}
+
+	public String getName() { return "GooglePack"; }
+
+}
+</code>
+</pre>
+<p>
+Done and done! Now we can use DoIt to execute our new expression:
+<p>
+<pre>
+<code>
+DoItSession session = new DoIt().createSession();
+session.load(new GooglePack());
+
+CallableExpression ce = session.parse("google translate from 'en' to 'pt-br' : hey! Doit is working!");
+Result result = ce.doIt();
+
+System.out.println(result.textValue());
+</code>
+</pre>
+<p>
+You can find this example, complete and working, in the <code>samplePacks</code> folder.
+
+</BODY>
+</HTML>
